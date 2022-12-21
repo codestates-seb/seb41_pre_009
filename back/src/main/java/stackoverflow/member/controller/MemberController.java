@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import stackoverflow.member.dto.MemberDto;
 import stackoverflow.member.entity.Member;
 import stackoverflow.member.mapper.MemberMapper;
+import stackoverflow.member.service.MemberService;
 import stackoverflow.response.SingleResponseDto;
 import stackoverflow.utils.UriCreator;
 
