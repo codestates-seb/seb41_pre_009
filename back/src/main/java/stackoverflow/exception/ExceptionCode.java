@@ -12,6 +12,7 @@ public enum ExceptionCode {
     QUESTION_EXISTS(409, "Question exists"),
     CANNOT_CHANGE_ANSWER(403, "Answer can not change"),
     CANNOT_CHANGE_QUESTION(403, "Question can not change"),
+    CANNOT_CHANGE_COMMENT(403,"Comment can not change"),
     CANNOT_CHANGE_MEMBER(403, "Member can not change"),
     NOT_IMPLEMENTATION(501, "Not Implementation"),
     INVALID_MEMBER_STATUS(400, "Invalid member status");  // TO 추가된 부분
