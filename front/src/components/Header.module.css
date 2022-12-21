@@ -1,0 +1,116 @@
+.header {
+  display: flex;
+  position: sticky;
+  min-height: 5vh;
+  border-top: 3px solid rgb(245, 162, 9);
+}
+
+.header-left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background-color: rgb(247, 247, 247);
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.header-left-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0px 20px;
+}
+
+.header-left-container > img {
+  width: 150px;
+  padding: 0%;
+  /* object-fit: contain; */
+  cursor: pointer;
+}
+
+.header-left-container > img:hover {
+  background-color: #ddd;
+  height: 30px;
+}
+
+.header-left-container > h3 {
+  font-size: 13px;
+  /* 폰트 얇기 */
+  font-weight: 400;
+  margin-left: 30px;
+  padding: 0px 2px;
+  cursor: pointer;
+}
+.header-left-container > h3:hover {
+  background-color: #ddd;
+  border-radius: 40px;
+}
+
+.header-middle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.header-search-container {
+  display: flex;
+  border-radius: 5px;
+  border: 1px solid rgb(199, 199, 199);
+  background-color: rgb(255, 255, 255);
+  height: 30px;
+  min-width: 30%;
+  flex-direction: row;
+  padding: 2px;
+}
+
+.header-search-container > input {
+  display: flex;
+  width: 100ch;
+  border: none;
+  outline: none;
+  margin: 0px 2px;
+  padding: 2px;
+  background-color: rgb(255, 255, 255);
+}
+
+.header-search-container > svg {
+  color: rgb(143, 142, 142);
+  margin-top: 4px;
+}
+
+.header-right {
+  display: flex;
+}
+
+.header-right-container {
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+}
+
+.header-right-container > svg {
+  color: rgb(75, 75, 75);
+  padding: 3px 5px;
+  margin: 0px 3px;
+  cursor: pointer;
+}
+
+.header-right-container > svg:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* 미디어쿼리 -반응형*/
+/* 스크린이 최대 너비가 640px이하라면 middle창 사라짐 */
+@media screen and (max-width: 640px) {
+  .header-middle {
+    display: none;
+  }
+}
+/* 
+@media screen and (min-width: 640px) {
+  .header-middle {
+    display: none;
+  }
+} */
