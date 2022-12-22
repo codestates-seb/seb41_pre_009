@@ -22,14 +22,14 @@
   margin: 0px 20px;
 }
 
-.header-left-container > img {
+.HomeLogo {
   width: 150px;
   padding: 0%;
   /* object-fit: contain; */
   cursor: pointer;
 }
 
-.header-left-container > img:hover {
+.HomeLogo:hover {
   background-color: #ddd;
   height: 30px;
 }
