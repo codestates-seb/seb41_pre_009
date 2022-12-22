@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { Public, Stars, Work, Info } from "@mui/icons-material";
 import styles from './Sidebar.module.css';
@@ -10,14 +11,14 @@ const Sidebar = () => {
             <div className={styles['sidebar-container']}>
                 <div className={styles['sidebar-options']}>
                     <div className={styles['sidebar-option']}>
-                        <a>Home</a>
+                        <p>Home</p>
                     </div>
                     <div className={styles['sidebar-option']}>
                         <p>PUBLIC</p>
                         <div className={styles.link}>
                             <div className={styles['link-tag']}>
                                 <Public className={styles.public} />
-                                <a>Questions</a>
+                                <Link to="/">Questions</Link>
                             </div>
                             <div className={styles.tags}>
                                 <p>Tags</p>

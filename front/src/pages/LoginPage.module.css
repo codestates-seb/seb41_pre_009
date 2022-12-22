@@ -1,0 +1,59 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 800px;
+}
+
+.container > button {
+    width: 400px;
+    margin: 10px;
+}
+
+form {
+    width: 400px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    box-shadow: 1px 1px rgb(201, 201, 201);
+}
+
+form > input {
+    width: 90%;
+    margin-left: 15px;
+    margin-bottom: 10px;
+}
+
+form > div {
+    margin-left: 15px;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+form > button {
+    width: 92.2%;
+    margin-left: 15px;
+}
+
+.withGoogle {
+    background-color: #fff;
+    color: #000;
+    border-color: rgba(0, 0, 0, 0.4);
+}
+
+.withGitHub {
+    background-color: #000;
+    color: #fff;
+    border-color: rgba(0, 0, 0, 0.4);
+}
+
+.withGoogle {
+    background-color: rgb(5, 24, 129);
+    color: #fff;
+    border-color: rgba(0, 0, 0, 0.4);
+}
