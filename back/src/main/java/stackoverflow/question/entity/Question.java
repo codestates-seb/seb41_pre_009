@@ -57,6 +57,17 @@ public class Question extends Auditable{
         }
     }
 
+
+    @OneToMany(mappedBy = "question")
+    List<Answer> answers = new ArrayList<>();
+
+
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
+
+
+
     public Question(String title, String content, Integer view) {
         this.title = title;
         this.content = content;
