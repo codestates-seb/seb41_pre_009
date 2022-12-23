@@ -3,9 +3,15 @@ package stackoverflow.member.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import stackoverflow.answer.entity.Answer;
 import stackoverflow.audit.Auditable;
+import stackoverflow.comment.entity.Comment;
+import stackoverflow.question.entity.Question;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -28,6 +34,17 @@ public class Member extends Auditable {
     @Enumerated(value = EnumType.STRING)
     @Column(length = 20, nullable = false)
     private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
+
+
+    @OneToMany(mappedBy = "member")
+    List<Question> questions = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    List<Answer> answers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    List<Comment> comments = new ArrayList<>();
+
 
     public enum MemberStatus {
         MEMBER_ACTIVE("활동중"),
