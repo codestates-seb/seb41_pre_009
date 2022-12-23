@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import stackoverflow.answer.entity.Answer;
+import stackoverflow.member.entity.Member;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -22,11 +23,11 @@ public class Comment {
     @Column(length = 100, nullable = false)
     private String text;
 
-/*
+
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
-*/
+
 
     @ManyToOne
     @JoinColumn(name = "ANSWER_ID")
