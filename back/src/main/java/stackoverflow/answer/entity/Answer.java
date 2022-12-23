@@ -6,8 +6,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import stackoverflow.audit.Auditable;
 import stackoverflow.comment.entity.Comment;
+
 import stackoverflow.member.entity.Member;
 import stackoverflow.question.entity.Question;
+
+
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -40,4 +43,6 @@ public class Answer extends Auditable {
 
     @OneToMany(mappedBy = "answer")
     private List<Comment> comments = new ArrayList<>();
+
+
 }

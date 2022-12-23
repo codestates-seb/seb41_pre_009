@@ -3,6 +3,7 @@ package stackoverflow.member.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import stackoverflow.answer.entity.Answer;
 import stackoverflow.audit.Auditable;
 import stackoverflow.comment.entity.Comment;
@@ -34,6 +35,7 @@ public class Member extends Auditable {
     @Column(length = 20, nullable = false)
     private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
 
+
     @OneToMany(mappedBy = "member")
     List<Question> questions = new ArrayList<>();
 
@@ -42,6 +44,7 @@ public class Member extends Auditable {
 
     @OneToMany(mappedBy = "member")
     List<Comment> comments = new ArrayList<>();
+
 
     public enum MemberStatus {
         MEMBER_ACTIVE("활동중"),

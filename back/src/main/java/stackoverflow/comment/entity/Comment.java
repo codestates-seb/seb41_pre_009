@@ -7,6 +7,7 @@ import lombok.Setter;
 import stackoverflow.answer.entity.Answer;
 import stackoverflow.member.entity.Member;
 
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -14,8 +15,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-public class Comment {
-//public class comment extends Auditable {
+public class Comment extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentId;
@@ -24,9 +24,11 @@ public class Comment {
     private String text;
 
 
+
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
+
 
 
     @ManyToOne
