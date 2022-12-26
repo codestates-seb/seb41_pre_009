@@ -21,6 +21,7 @@ public interface AnswerMapper {
     }
     Answer answerPatchDtoToAnswer(AnswerDto.Patch requestBody);
 
+
     @Mapping(source = "member.memberId", target = "memberId")
     @Mapping(source = "question.questionId", target = "questionId")
     AnswerDto.Response answerToAnswerResponseDto(Answer answer);

@@ -33,6 +33,7 @@ public class AnswerService {
         //질문이 존재하는지 확인
         questionService.findVerifiedQuestion(answer.getQuestion().getQuestionId());
 
+
         return answerRepository.save(answer);
     }
 
