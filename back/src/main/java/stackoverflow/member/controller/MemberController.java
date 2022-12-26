@@ -56,7 +56,7 @@ public class MemberController {
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(mapper.memberToMemberResponseDto(member)),
-                HttpStatus.CREATED);
+                HttpStatus.OK);
     }
 
     @GetMapping("/{member-id}")

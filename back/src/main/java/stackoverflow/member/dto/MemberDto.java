@@ -1,7 +1,6 @@
 package stackoverflow.member.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import stackoverflow.member.entity.Member;
 import stackoverflow.validator.NotSpace;
@@ -18,7 +17,6 @@ public class MemberDto {
 
         @NotBlank(message = "이름은 공백이 아니어야 합니다.")
         private String name;
-
         private String password;
 
         public Post(String email, String name, String password) {

@@ -1,7 +1,6 @@
 package stackoverflow.answer.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import stackoverflow.member.entity.Member;
 import stackoverflow.validator.NotSpace;
@@ -14,11 +13,12 @@ public class AnswerDto {
         private String content;
         private long answerVoteCount;
 
+
         public Post(String content, long answerVoteCount) {
             this.content = content;
             this.answerVoteCount = answerVoteCount;
         }
-    }
+  }
 
     @Getter
     @AllArgsConstructor
@@ -32,8 +32,6 @@ public class AnswerDto {
         public void setAnswerId(long answerId) {
             this.answerId = answerId;
         }
-
-
     }
 
     @AllArgsConstructor
@@ -42,6 +40,7 @@ public class AnswerDto {
         private long answerId;
         private String content;
         private long answerVoteCount;
+
 
     }
 }

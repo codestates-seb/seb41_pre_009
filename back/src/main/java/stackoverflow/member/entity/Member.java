@@ -31,6 +31,7 @@ public class Member extends Auditable {
     @Column(nullable = false)
     private String password;
 
+
     @Enumerated(value = EnumType.STRING)
     @Column(length = 20, nullable = false)
     private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
@@ -57,6 +58,7 @@ public class Member extends Auditable {
             answer.setMember(this);
         }
     }
+
 
     public enum MemberStatus {
         MEMBER_ACTIVE("활동중"),
