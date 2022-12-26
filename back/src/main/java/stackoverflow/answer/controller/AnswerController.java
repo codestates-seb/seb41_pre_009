@@ -25,7 +25,7 @@ import java.util.List;
 @RequestMapping("/answers")
 @Validated
 public class AnswerController {
-    private final static String Answer_DEFAULT_URL = "/answers";
+    private final static String ANSWER_DEFAULT_URL = "/answers";
     private AnswerService answerService;
     private AnswerMapper mapper;
     private final MemberService memberService;
@@ -52,7 +52,8 @@ public class AnswerController {
     public ResponseEntity patchAnswer(@PathVariable("answer-id") @Positive long answerId,
                                       @Valid @RequestBody AnswerDto.Patch requestBody) {
         requestBody.setAnswerId(answerId);
-        Answer answer = answerService.updateAnswer(mapper.answerPatchDtoToAnswer(requestBody));
+        Answer answer =
+                answerService.updateAnswer(mapper.answerPatchDtoToAnswer(requestBody));
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(mapper.answerToAnswerResponseDto(answer)),

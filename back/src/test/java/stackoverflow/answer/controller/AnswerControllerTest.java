@@ -18,6 +18,7 @@ import stackoverflow.answer.dto.AnswerDto;
 import stackoverflow.answer.entity.Answer;
 import stackoverflow.answer.mapper.AnswerMapper;
 import stackoverflow.answer.service.AnswerService;
+import stackoverflow.member.entity.Member;
 
 import java.net.URI;
 
@@ -46,10 +47,14 @@ class AnswerControllerTest {
     @Test
     void postAnswerTest() throws Exception {
         // given
-        AnswerDto.Post post = new AnswerDto.Post("홍길동", 1);
-        AnswerDto.Response responseBody = new AnswerDto.Response(1L,
+        Member member = new Member("hgd@gmail.com",
                 "홍길동",
-                1);
+                "1234");
+
+        AnswerDto.Post post = new AnswerDto.Post(1L,1, "홍길동은 아버지를 아버지라 부르지 못했다. 어머니는 어머니라 불렀을까? 형은 뭐라고 불렀을까?");
+        AnswerDto.Response responseBody = new AnswerDto.Response(1L,
+                1L,
+                1L,"홍길동은 아버지를 아버지라 부르지 못했다. 어머니는 어머니라 불렀을까? 형은 뭐라고 불렀을까?");
 
         // Stubbing by Mockito
         given(mapper.answerPostDtoToAnswer(Mockito.any(AnswerDto.Post.class))).willReturn(new Answer());
@@ -72,8 +77,9 @@ class AnswerControllerTest {
         // then
         MvcResult result = actions
                 .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.data.memberId").value(post.getMemberId()))
+                .andExpect(jsonPath("$.data.questionId").value(post.getQuestionId()))
                 .andExpect(jsonPath("$.data.content").value(post.getContent()))
-                .andExpect(jsonPath("$.data.answerVoteCount").value(post.getAnswerVoteCount()))
                 .andReturn();
 
 //        System.out.println(result.getResponse().getContentAsString());
@@ -85,12 +91,11 @@ class AnswerControllerTest {
         long answerId = 1L;
 
     AnswerDto.Patch patch = new AnswerDto.Patch(0,
-            "홍길동",
-            1);
+            "홍길동은 아버지를 아버지라 부르지 못했다. 어머니는 어머니라 불렀을까? 형은 뭐라고 불렀을까?");
 
     AnswerDto.Response response = new AnswerDto.Response(1L,
-            "홍길동",
-            1);
+            1L,
+            1L,"홍길동은 아버지를 아버지라 부르지 못했다. 어머니는 어머니라 불렀을까? 형은 뭐라고 불렀을까?");
 
         // Stubbing by Mockito
         given(mapper.answerPatchDtoToAnswer(Mockito.any(AnswerDto.Patch.class))).willReturn(new Answer());
@@ -122,13 +127,12 @@ class AnswerControllerTest {
     void getAnswerTest() throws Exception {
         // given
         long answerId = 1L;
-        Answer answer = new Answer(1L, "홍길동");
+        Answer answer = new Answer("홍길동");
         answer.setAnswerId(answerId);
 
         AnswerDto.Response response = new AnswerDto.Response(1L,
-                "홍길동",
-                1);
-
+                1L,
+                1L,"홍길동");
         // Stubbing by Mockito
         given(answerService.findAnswer(Mockito.anyLong())).willReturn(new Answer());
         given(mapper.answerToAnswerResponseDto(Mockito.any(Answer.class))).willReturn(response);
@@ -143,12 +147,11 @@ class AnswerControllerTest {
 
         // then
         actions.andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.content").value(answer.getContent()))
-                .andExpect(jsonPath("$.data.answerVoteCount").value(answer.getAnswerVoteCount()));
+                .andExpect(jsonPath("$.data.content").value(answer.getContent()));
     }
 
     @Test
-    void deleteanswerTest() throws Exception {
+    void deleteAnswerTest() throws Exception {
         // given
         long answerId = 1L;
 
@@ -161,5 +164,4 @@ class AnswerControllerTest {
         // then
         actions.andExpect(status().isNoContent());
     }
-
 }
