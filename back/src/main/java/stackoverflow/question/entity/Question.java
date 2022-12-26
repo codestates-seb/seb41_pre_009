@@ -19,16 +19,9 @@ import java.util.List;
 @Setter
 @Entity
 public class Question extends Auditable{
-    //ToDo
-        //Member-Question 1:N 매핑하기
-        //Question-Answer 1:N 매핑하기
-        //Question-Vote 1:1 매핑하기
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long questionId;
-
-    //memberId는 Member 테이블과 매핑하면서 가져오기
 
     @Column(nullable = false)
     @Size(min = 15, max = 150)
@@ -39,8 +32,14 @@ public class Question extends Auditable{
     private String content;
 
     @Column
-    private Integer view; //null 허용 여부 논의하기
+    private int view = 0;
 
+    @Column
+    private int questionVoteCount = 0;
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(length = 20, nullable = false)
+    private Question.QuestionStatus questionStatus = QuestionStatus.QUESTION_ACCEPTED;
 
     @OneToMany(mappedBy = "question")
     List<Answer> answers = new ArrayList<>();
@@ -51,10 +50,27 @@ public class Question extends Auditable{
     private Member member;
 
 
+    public void setMember(Member member) {
+        this.member = member;
+        if (!this.member.getQuestions().contains(this)) {
+            this.member.getQuestions().add(this);
+        }
+    }
 
     public Question(String title, String content, Integer view) {
         this.title = title;
         this.content = content;
         this.view = view;
+    }
+
+    public enum QuestionStatus {
+        QUESTION_ACCEPTED("등록된 질문"),
+        QUESTION_DELETE("삭제된 질문");
+
+        @Getter
+        private String status;
+        QuestionStatus(String status) {
+            this.status = status;
+        }
     }
 }

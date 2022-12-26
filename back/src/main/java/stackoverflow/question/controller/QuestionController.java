@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import stackoverflow.member.service.MemberService;
 import stackoverflow.question.dto.QuestionDto;
 import stackoverflow.question.entity.Question;
 import stackoverflow.question.mapper.QuestionMapper;
@@ -27,23 +28,26 @@ public class QuestionController {
     private final static String QUESTION_DEFAULT_URL = "/questions";
     private final QuestionService questionService;
     private final QuestionMapper mapper;
+    private final MemberService memberService;
 
-    public QuestionController(QuestionService questionService, QuestionMapper mapper) {
+    public QuestionController(QuestionService questionService, QuestionMapper mapper, MemberService memberService) {
         this.questionService = questionService;
         this.mapper = mapper;
+        this.memberService = memberService;
     }
 
 
     @PostMapping
-    public ResponseEntity postQuestion(@Valid @RequestBody QuestionDto.Post requestBody) {
+    public ResponseEntity postQuestion(@RequestBody QuestionDto.Post requestBody) {
         Question question = mapper.questionPostDtoToQuestion(requestBody);
 
         Question createdQuestion = questionService.createQuestion(question);
-        URI location = UriCreator.createUri(QUESTION_DEFAULT_URL, createdQuestion.getQuestionId());
-        //클라이언트에게 줄 Response Body로 구체적인 Json 데이터보다 UriCreator로 만든 uri를 주는 걸 권장
-        //그 uri로 클라이언트가 get 조회
+        //URI location = UriCreator.createUri(QUESTION_DEFAULT_URL, createdQuestion.getQuestionId());
 
-        return ResponseEntity.created(location).build();
+        //return ResponseEntity.created(location).build();
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(mapper.questionToQuestionResponseDto(createdQuestion)),
+                HttpStatus.CREATED);
     }
 
     @PatchMapping("/{question-id}")
@@ -57,9 +61,6 @@ public class QuestionController {
         return new ResponseEntity<>(
                 new SingleResponseDto<>(mapper.questionToQuestionResponseDto(question)),
                 HttpStatus.OK);
-        // SingleResponseDto 클래스 없이 MemberResponseDto 클래스를 던져줘도 되는데
-        // 향후에 어떤 필드가 추가될 가능성을 대비해서 SingleResponseDto 클래스로 한 번 감싸주는 것
-        // MultiResponseDto의 반대 개념으로 의미를 딱 알 수 있는 효과도 있어요. 딱 한 건의 데이터만 response body로 리턴한다
     }
 
     @GetMapping("/{question-id}")
@@ -70,7 +71,7 @@ public class QuestionController {
                 , HttpStatus.OK);
     }
 
-    @GetMapping
+    /*@GetMapping
     public ResponseEntity getQuestions(@Positive @RequestParam int page,
                                      @Positive @RequestParam int size) {
         Page<Question> pageQuestions = questionService.findQuestions(page - 1, size);
@@ -79,7 +80,7 @@ public class QuestionController {
                 new MultiResponseDto<>(mapper.questionsToQuestionResponseDtos(questions),
                         pageQuestions),
                 HttpStatus.OK);
-    }
+    }*/
 
     @DeleteMapping("/{question-id}")
     public ResponseEntity deleteQuestion(
