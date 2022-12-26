@@ -10,7 +10,6 @@ import stackoverflow.member.entity.Member;
 
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Getter
@@ -27,6 +26,7 @@ public class Comment extends Auditable {
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
+
 
     @ManyToOne
     @JoinColumn(name = "ANSWER_ID")
