@@ -65,7 +65,7 @@ public class AnswerController {
                 HttpStatus.OK);
     }
 
-    /*@GetMapping
+    @GetMapping
     public ResponseEntity getAnswers(@Positive @RequestParam int page,
                                      @Positive @RequestParam int size) {
         Page<Answer> pageAnswers = answerService.findAnswers(page - 1, size);
@@ -75,7 +75,7 @@ public class AnswerController {
                 new MultiResponseDto<>(mapper.answersToAnswerResponseDtos(answers),
                         pageAnswers),
                 HttpStatus.OK);
-    }*/
+    }
 
     @DeleteMapping("/{answer-id}")
     public ResponseEntity deleteAnswer(@PathVariable("answer-id") long answerId) {

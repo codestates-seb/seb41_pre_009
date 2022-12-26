@@ -1,6 +1,9 @@
 package stackoverflow.answer.service;
 
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import stackoverflow.answer.entity.Answer;
@@ -51,10 +54,10 @@ public class AnswerService {
         return findVerifiedAnswerByQuery(answerId);
     }
 
-   /* public Page<Answer> findAnswers(int page, int size) {
+    public Page<Answer> findAnswers(int page, int size) {
         return answerRepository.findAll(PageRequest.of(page, size,
-                Sort.by("AnswerId").descending()));
-    }*/
+                Sort.by("answerId").descending()));
+    }
 
     public void deleteAnswer(long answerId) {
         Answer answer = findVerifiedAnswer(answerId);

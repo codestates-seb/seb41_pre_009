@@ -1,6 +1,9 @@
 package stackoverflow.question.service;
 
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import stackoverflow.exception.BusinessLogicException;
 import stackoverflow.exception.ExceptionCode;
@@ -48,10 +51,10 @@ public class QuestionService {
         return findQuestion;
     }
 
-    /*public Page<Question> findQuestions(int page, int size) {
+    public Page<Question> findQuestions(int page, int size) {
         return questionRepository.findAll(PageRequest.of(page, size,
                 Sort.by("questionId").descending()));
-    }*/
+    }
 
     public void deleteQuestion(long questionId) {
         Question findQuestion = findVerifiedQuestion(questionId);
@@ -75,6 +78,5 @@ public class QuestionService {
 
         return findQuestion;
     }
-
 
 }
