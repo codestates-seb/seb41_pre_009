@@ -29,7 +29,8 @@ public class Member extends Auditable {
     private String name;
 
     @Column(nullable = false)
-    private String passWord;
+    private String password;
+
 
     @Enumerated(value = EnumType.STRING)
     @Column(length = 20, nullable = false)
@@ -44,6 +45,19 @@ public class Member extends Auditable {
 
     @OneToMany(mappedBy = "member")
     List<Comment> comments = new ArrayList<>();
+
+    public Member(String email, String name, String password) {
+        this.email = email;
+        this.name = name;
+        this.password = password;
+    }
+
+    public void setAnswer(Answer answer) {
+        answers.add(answer);
+        if (answer.getMember() != this) {
+            answer.setMember(this);
+        }
+    }
 
 
     public enum MemberStatus {

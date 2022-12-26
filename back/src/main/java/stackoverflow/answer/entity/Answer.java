@@ -44,5 +44,8 @@ public class Answer extends Auditable {
     @OneToMany(mappedBy = "answer")
     private List<Comment> comments = new ArrayList<>();
 
-
+    public Answer(Long answerVoteCount, String content) {
+        this.answerVoteCount = answerVoteCount;
+        this.content = content;
+    }
 }
