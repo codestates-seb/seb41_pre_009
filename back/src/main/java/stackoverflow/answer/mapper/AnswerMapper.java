@@ -7,6 +7,7 @@ import stackoverflow.answer.entity.Answer;
 import stackoverflow.member.entity.Member;
 import stackoverflow.question.entity.Question;
 
+
 @Mapper(componentModel = "spring")
 public interface AnswerMapper {
     default Answer answerPostDtoToAnswer(AnswerDto.Post requestBody) {
@@ -23,7 +24,9 @@ public interface AnswerMapper {
         return answer;
     }
 
+    
     Answer answerPatchDtoToAnswer(AnswerDto.Patch requestBody);
+
 
     @Mapping(source = "member.memberId", target = "memberId")
     @Mapping(source = "question.questionId", target = "questionId")

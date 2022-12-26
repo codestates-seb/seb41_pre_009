@@ -34,8 +34,9 @@ public class Question extends Auditable{
     @Column
     private int view = 0;
 
-    /*@Column
-    private int vote = 0;*/
+    @Column
+    private int questionVoteCount = 0;
+
 
     @Enumerated(value = EnumType.STRING)
     @Column(length = 20, nullable = false)

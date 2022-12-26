@@ -10,7 +10,6 @@ import stackoverflow.exception.ExceptionCode;
 import stackoverflow.member.service.MemberService;
 import stackoverflow.question.service.QuestionService;
 
-
 import java.util.Optional;
 
 @Service
@@ -19,7 +18,6 @@ public class AnswerService {
     private final MemberService memberService;
     private final AnswerRepository answerRepository;
     private final QuestionService questionService;
-
 
     public AnswerService(MemberService memberService, AnswerRepository answerRepository, QuestionService questionService) {
         this.memberService = memberService;

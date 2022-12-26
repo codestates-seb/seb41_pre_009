@@ -24,7 +24,6 @@ public class QuestionService {
         //회원이 존재하는지 확인
         memberService.findVerifiedMember(question.getMember().getMemberId());
 
-
         return questionRepository.save(question);
     }
 
@@ -39,7 +38,6 @@ public class QuestionService {
 
     public Question findQuestion(long questionId) {
         Question findQuestion = findVerifiedQuestionByQuery(questionId);
-
 
         //조회할 때마다 조회 수 1 증가
         findQuestion.setView(findQuestion.getView() + 1);
@@ -75,6 +73,5 @@ public class QuestionService {
 
         return findQuestion;
     }
-
 
 }

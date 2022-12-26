@@ -2,6 +2,7 @@ package stackoverflow.comment.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+
 import stackoverflow.answer.entity.Answer;
 import stackoverflow.comment.dto.CommentDto;
 import stackoverflow.comment.entity.Comment;

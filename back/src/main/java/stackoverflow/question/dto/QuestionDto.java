@@ -2,16 +2,20 @@ package stackoverflow.question.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
 import stackoverflow.answer.dto.AnswerDto;
 import stackoverflow.answer.entity.Answer;
 import stackoverflow.comment.dto.CommentDto;
 import stackoverflow.member.entity.Member;
+
 import stackoverflow.question.entity.Question;
 import stackoverflow.validator.NotSpace;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class QuestionDto {
@@ -59,8 +63,6 @@ public class QuestionDto {
     public static class Response {
         private long questionId; //질문 Id
         private long memberId; //질문 생성한 유저 고유 Id
-
-        //private String name; //질문 생성한 유저 이름
         private String title; //질문 제목
         private String content; //질문 내용
         private int view; //질문 조회 수
@@ -68,6 +70,7 @@ public class QuestionDto {
 
         //private int vote;
         private List<Answer> answers; //질문에 달린 답변 정보
+
     }
 
 }
