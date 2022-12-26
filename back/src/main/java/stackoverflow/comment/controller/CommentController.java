@@ -32,10 +32,13 @@ public class CommentController {
     @PostMapping
     public ResponseEntity postComment(@Valid @RequestBody CommentDto.Post requestBody) {
         Comment comment = commentService.createComment(mapper.commentPostDtoToComment(requestBody));
+//        URI location = UriCreator.createUri(Answer_DEFAULT_URL, answer.getAnswerId());
 
-        URI location = UriCreator.createUri(COMMENT_DEFAULT_URL, comment.getCommentId());
+//        return ResponseEntity.created(location).build();
 
-        return ResponseEntity.created(location).build();
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(mapper.commentToCommentResponseDto(comment))
+                , HttpStatus.CREATED);
     }
 
     @PatchMapping("/{comment-id}")
