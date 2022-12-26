@@ -7,6 +7,7 @@ import stackoverflow.comment.entity.Comment;
 import stackoverflow.comment.repository.CommentRepository;
 import stackoverflow.exception.BusinessLogicException;
 import stackoverflow.exception.ExceptionCode;
+import stackoverflow.member.service.MemberService;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -14,22 +15,17 @@ import java.util.Optional;
 @Service
 @Transactional
 public class CommentService {
-//    private final MemberService memberService;
+    private final MemberService memberService;
     private final CommentRepository commentRepository;
 
-    /*public commentService(MemberService memberService, commentRepository commentRepository) {
+    public CommentService(MemberService memberService, CommentRepository commentRepository) {
         this.memberService = memberService;
-        this.commentRepository = commentRepository;
-    }*/
-
-    public CommentService(CommentRepository commentRepository) {
         this.commentRepository = commentRepository;
     }
 
     public Comment createComment(Comment comment) {
         //회원이 존재하는지 확인
-//        memberService.findVerifiedMember(comment.getMember().getMemberId());
-//        createcomment.setCreateTime(LocalDateTime.now());
+        memberService.findVerifiedMember(comment.getMember().getMemberId());
 
         return commentRepository.save(comment);
     }

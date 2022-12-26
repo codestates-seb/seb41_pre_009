@@ -35,12 +35,17 @@ public class MemberController {
         Member member = mapper.memberPostDtoToMember(requestBody);
 
         Member createdMember = memberService.createMember(member);
-        URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, createdMember.getMemberId());
+        /*URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, createdMember.getMemberId());
 
         return ResponseEntity.created(location).build();
+    }*/
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(mapper.memberToMemberResponseDto(createdMember)),
+                HttpStatus.CREATED);
     }
 
-    @PatchMapping("/{member-id}")
+
+        @PatchMapping("/{member-id}")
     public ResponseEntity patchMember(
             @PathVariable("member-id") @Positive long memberId,
             @Valid @RequestBody MemberDto.Patch requestBody) {
@@ -51,7 +56,7 @@ public class MemberController {
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(mapper.memberToMemberResponseDto(member)),
-                HttpStatus.OK);
+                HttpStatus.CREATED);
     }
 
     @GetMapping("/{member-id}")

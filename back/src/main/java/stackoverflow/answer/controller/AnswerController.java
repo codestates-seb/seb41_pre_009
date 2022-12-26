@@ -10,6 +10,7 @@ import stackoverflow.answer.dto.AnswerDto;
 import stackoverflow.answer.entity.Answer;
 import stackoverflow.answer.mapper.AnswerMapper;
 import stackoverflow.answer.service.AnswerService;
+import stackoverflow.member.service.MemberService;
 import stackoverflow.response.MultiResponseDto;
 import stackoverflow.response.SingleResponseDto;
 import stackoverflow.utils.UriCreator;
@@ -26,18 +27,23 @@ public class AnswerController {
     private final static String Answer_DEFAULT_URL = "/answers";
     private AnswerService answerService;
     private AnswerMapper mapper;
+    private final MemberService memberService;
 
-    public AnswerController(AnswerService answerService, AnswerMapper mapper) {
+    public AnswerController(AnswerService answerService, AnswerMapper mapper, MemberService memberService) {
         this.answerService = answerService;
         this.mapper = mapper;
+        this.memberService = memberService;
     }
 
     @PostMapping
     public ResponseEntity postAnswer(@Valid @RequestBody AnswerDto.Post requestBody) {
         Answer answer = answerService.createAnswer(mapper.answerPostDtoToAnswer(requestBody));
-        URI location = UriCreator.createUri(Answer_DEFAULT_URL, answer.getAnswerId());
+//        URI location = UriCreator.createUri(Answer_DEFAULT_URL, answer.getAnswerId());
 
-        return ResponseEntity.created(location).build();
+//        return ResponseEntity.created(location).build();
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(mapper.answerToAnswerResponseDto(answer))
+                , HttpStatus.CREATED);
     }
 
     @PatchMapping("/{answer-id}")

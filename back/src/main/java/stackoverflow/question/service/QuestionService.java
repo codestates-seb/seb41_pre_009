@@ -36,7 +36,6 @@ public class QuestionService {
         Optional.ofNullable(question.getTitle()).ifPresent(title -> findQuestion.setTitle(title));
         Optional.ofNullable(question.getContent()).ifPresent(content -> findQuestion.setContent(content));
 
-        //findQuestion.setModifiedAt(LocalDateTime.now());
 
         return questionRepository.save(findQuestion);
     }

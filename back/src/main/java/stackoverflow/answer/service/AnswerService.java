@@ -7,6 +7,7 @@ import stackoverflow.answer.entity.Answer;
 import stackoverflow.answer.repository.AnswerRepository;
 import stackoverflow.exception.BusinessLogicException;
 import stackoverflow.exception.ExceptionCode;
+import stackoverflow.member.service.MemberService;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -14,22 +15,17 @@ import java.util.Optional;
 @Service
 @Transactional
 public class AnswerService {
-//    private final MemberService memberService;
+    private final MemberService memberService;
     private final AnswerRepository answerRepository;
 
-    /*public AnswerService(MemberService memberService, AnswerRepository answerRepository) {
+    public AnswerService(MemberService memberService, AnswerRepository answerRepository) {
         this.memberService = memberService;
-        this.answerRepository = answerRepository;
-    }*/
-
-    public AnswerService(AnswerRepository answerRepository) {
         this.answerRepository = answerRepository;
     }
 
     public Answer createAnswer(Answer answer) {
         //회원이 존재하는지 확인
-//        memberService.findVerifiedMember(answer.getMember().getMemberId());
-//        createAnswer.setCreateTime(LocalDateTime.now());
+        memberService.findVerifiedMember(answer.getMember().getMemberId());
 
         return answerRepository.save(answer);
     }
@@ -44,8 +40,6 @@ public class AnswerService {
                 .ifPresent(questiond -> findAnswer.setQuestion(questiond));*/
         Optional.ofNullable(answer.getContent())
                 .ifPresent(content -> findAnswer.setContent(content));
-        // 수정된 시간 적용
-        //findAnswer.setModifiedTime(LocalDateTime.now());
 
         return answerRepository.save(findAnswer);
     }
