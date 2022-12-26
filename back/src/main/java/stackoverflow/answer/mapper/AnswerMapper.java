@@ -12,7 +12,7 @@ public interface AnswerMapper {
 
     Answer answerPatchDtoToAnswer(AnswerDto.Patch requestBody);
 
-    AnswerDto answerToAnswerResponseDto(Answer answer);
+    AnswerDto.Response answerToAnswerResponseDto(Answer answer);
 
 //    List<AnswerResponseDto> answersToAnswerResponseDtos(List<Answer> answer);
 
