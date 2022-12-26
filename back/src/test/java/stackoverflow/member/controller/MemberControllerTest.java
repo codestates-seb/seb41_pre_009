@@ -44,7 +44,9 @@ class MemberControllerTest {
     @Test
     void postMemberTest() throws Exception {
         // given
-        MemberDto.Post post = new MemberDto.Post("hgd@gmail.com", "홍길동", "1234");
+        MemberDto.Post post = new MemberDto.Post("hgd@gmail.com",
+                "홍길동",
+                "1234");
         MemberDto.Response responseBody = new MemberDto.Response(1L,
                 "hgd@gmail.com",
                 "홍길동",
