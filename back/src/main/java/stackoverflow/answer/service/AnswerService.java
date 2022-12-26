@@ -10,7 +10,6 @@ import stackoverflow.exception.ExceptionCode;
 import stackoverflow.member.service.MemberService;
 import stackoverflow.question.service.QuestionService;
 
-
 import java.util.Optional;
 
 @Service
@@ -32,7 +31,6 @@ public class AnswerService {
 
         //질문이 존재하는지 확인
         questionService.findVerifiedQuestion(answer.getQuestion().getQuestionId());
-
 
         return answerRepository.save(answer);
     }

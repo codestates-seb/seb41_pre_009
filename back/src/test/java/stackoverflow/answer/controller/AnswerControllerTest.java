@@ -18,10 +18,14 @@ import stackoverflow.answer.dto.AnswerDto;
 import stackoverflow.answer.entity.Answer;
 import stackoverflow.answer.mapper.AnswerMapper;
 import stackoverflow.answer.service.AnswerService;
-import stackoverflow.member.entity.Member;
-
+import stackoverflow.comment.entity.Comment;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
+
+import stackoverflow.member.entity.Member;
+
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
@@ -48,14 +52,11 @@ class AnswerControllerTest {
     @Test
     void postAnswerTest() throws Exception {
         // given
-        Member member = new Member("hgd@gmail.com",
-                "홍길동",
-                "1234");
+        List<Comment> comments = new ArrayList<>();
+        AnswerDto.Post post = new AnswerDto.Post(1L, 1L,"안녕하세요 답변 드리겠습니다. 이것은 예시입니다");
+        AnswerDto.Response responseBody = new AnswerDto.Response(1L,1L,1L,
+                "안녕하세요 답변 드리겠습니다. 이것은 예시입니다",comments);
 
-        AnswerDto.Post post = new AnswerDto.Post(1L,1, "홍길동은 아버지를 아버지라 부르지 못했다. 어머니는 어머니라 불렀을까? 형은 뭐라고 불렀을까?");
-        AnswerDto.Response responseBody = new AnswerDto.Response(1L,
-                1L,
-                1L,"홍길동은 아버지를 아버지라 부르지 못했다. 어머니는 어머니라 불렀을까? 형은 뭐라고 불렀을까?");
 
         // Stubbing by Mockito
         given(mapper.answerPostDtoToAnswer(Mockito.any(AnswerDto.Post.class))).willReturn(new Answer());
@@ -81,9 +82,8 @@ class AnswerControllerTest {
                 .andExpect(jsonPath("$.data.memberId").value(post.getMemberId()))
                 .andExpect(jsonPath("$.data.questionId").value(post.getQuestionId()))
                 .andExpect(jsonPath("$.data.content").value(post.getContent()))
+                //.andExpect(jsonPath("$.data.answerVoteCount").value(post.getAnswerVoteCount()))
                 .andReturn();
-
-//        System.out.println(result.getResponse().getContentAsString());
     }
 
 @Test
@@ -91,12 +91,16 @@ class AnswerControllerTest {
         // given
         long answerId = 1L;
 
-    AnswerDto.Patch patch = new AnswerDto.Patch(0,
-            "홍길동은 아버지를 아버지라 부르지 못했다. 어머니는 어머니라 불렀을까? 형은 뭐라고 불렀을까?");
+        List<Comment> comments = new ArrayList<>();
+        AnswerDto.Patch patch = new AnswerDto.Patch(1L,
+            "이것은 수정 내용입니다. 이것은 예시입니다.");
 
-    AnswerDto.Response response = new AnswerDto.Response(1L,
+        AnswerDto.Response response = new AnswerDto.Response(1L,
             1L,
-            1L,"홍길동은 아버지를 아버지라 부르지 못했다. 어머니는 어머니라 불렀을까? 형은 뭐라고 불렀을까?");
+            1L,
+            "이것은 수정 내용입니다. 이것은 예시입니다.",
+                comments);
+
 
         // Stubbing by Mockito
         given(mapper.answerPatchDtoToAnswer(Mockito.any(AnswerDto.Patch.class))).willReturn(new Answer());
@@ -121,6 +125,7 @@ class AnswerControllerTest {
 
         // then
         actions.andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.answerId").value(patch.getAnswerId()))
                 .andExpect(jsonPath("$.data.content").value(patch.getContent()));
     }
 
@@ -128,12 +133,19 @@ class AnswerControllerTest {
     void getAnswerTest() throws Exception {
         // given
         long answerId = 1L;
-        Answer answer = new Answer("홍길동");
+
+        List<Comment> comments = new ArrayList<>();
+        Answer answer = new Answer("안녕하세요 답변 드리겠습니다. 이것은 Get 예시입니다");
+
         answer.setAnswerId(answerId);
 
         AnswerDto.Response response = new AnswerDto.Response(1L,
                 1L,
-                1L,"홍길동");
+                1L,
+                "안녕하세요 답변 드리겠습니다. 이것은 Get 예시입니다",
+                comments);
+
+
         // Stubbing by Mockito
         given(answerService.findAnswer(Mockito.anyLong())).willReturn(new Answer());
         given(mapper.answerToAnswerResponseDto(Mockito.any(Answer.class))).willReturn(response);
@@ -149,10 +161,13 @@ class AnswerControllerTest {
         // then
         actions.andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.content").value(answer.getContent()));
+                //.andExpect(jsonPath("$.data.answerVoteCount").value(answer.getAnswerVoteCount()));
     }
+
 
     @Test
     void deleteAnswerTest() throws Exception {
+
         // given
         long answerId = 1L;
 
@@ -165,4 +180,5 @@ class AnswerControllerTest {
         // then
         actions.andExpect(status().isNoContent());
     }
+
 }

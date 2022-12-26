@@ -3,16 +3,23 @@ package stackoverflow.question.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import stackoverflow.answer.dto.AnswerDto;
+import stackoverflow.answer.entity.Answer;
+import stackoverflow.comment.dto.CommentDto;
+import stackoverflow.member.entity.Member;
+
 import stackoverflow.question.entity.Question;
 import stackoverflow.validator.NotSpace;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class QuestionDto {
+    //질문 생성 Dto
     @Getter
     @AllArgsConstructor
     public static class Post {
@@ -29,6 +36,7 @@ public class QuestionDto {
 
     }
 
+    //질문 수정 Dto
     @Getter
     @AllArgsConstructor
     public static class Patch {
@@ -49,20 +57,20 @@ public class QuestionDto {
         }
     }
 
+    //질문 상세 조회 Dto
     @AllArgsConstructor
     @Getter
     public static class Response {
-        private long questionId;
-        private long memberId;
-        private String title;
-        private String content;
-        private int view;
-        private Question.QuestionStatus questionStatus;
+        private long questionId; //질문 Id
+        private long memberId; //질문 생성한 유저 고유 Id
+        private String title; //질문 제목
+        private String content; //질문 내용
+        private int view; //질문 조회 수
+        private Question.QuestionStatus questionStatus; //질문 상태
 
         //private int vote;
-        //private MemberDto.Response memberInfo;
-        //private List<AnswerDto.Response> answers;
-        //private List<CommentDto.Response> comments;
+        private List<Answer> answers; //질문에 달린 답변 정보
+
     }
 
 }

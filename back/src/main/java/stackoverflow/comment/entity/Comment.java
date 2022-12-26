@@ -10,6 +10,7 @@ import stackoverflow.member.entity.Member;
 
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Getter
@@ -20,7 +21,8 @@ public class Comment extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentId;
 
-    @Column(nullable = false)
+
+    @Column(length = 500, nullable = false)
     private String text;
 
     @ManyToOne
