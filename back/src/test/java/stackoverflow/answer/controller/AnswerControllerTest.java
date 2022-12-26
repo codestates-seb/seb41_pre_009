@@ -20,6 +20,7 @@ import stackoverflow.answer.mapper.AnswerMapper;
 import stackoverflow.answer.service.AnswerService;
 import stackoverflow.member.entity.Member;
 
+
 import java.net.URI;
 
 import static org.mockito.BDDMockito.given;
@@ -77,6 +78,7 @@ class AnswerControllerTest {
         // then
         MvcResult result = actions
                 .andExpect(status().isCreated())
+
                 .andExpect(jsonPath("$.data.memberId").value(post.getMemberId()))
                 .andExpect(jsonPath("$.data.questionId").value(post.getQuestionId()))
                 .andExpect(jsonPath("$.data.content").value(post.getContent()))
@@ -152,6 +154,7 @@ class AnswerControllerTest {
 
     @Test
     void deleteAnswerTest() throws Exception {
+
         // given
         long answerId = 1L;
 

@@ -67,15 +67,4 @@ public class Answer extends Auditable {
     public Answer(String content) {
         this.content = content;
     }
-
-   /* public enum AnswerStatus {
-        ANSWER_ACCEPTED("등록된 질문"),
-        ANSWER_DELETE("삭제된 질문");
-
-        @Getter
-        private String status;
-        AnswerStatus(String status) {
-            this.status = status;
-        }
-    }*/
 }

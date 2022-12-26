@@ -2,6 +2,7 @@ package stackoverflow.answer.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import stackoverflow.member.entity.Member;
 import stackoverflow.validator.NotSpace;
 
 import javax.validation.constraints.Positive;
@@ -19,8 +20,6 @@ public class AnswerDto {
         @NotSpace(message = "내용은 공백이 아니어야 합니다.")
         @Size(min = 30, message = "내용은 최소 30글자 이상 작성해야 합니다.")
         private String content;
-
-    }
 
 
     @Getter
@@ -47,6 +46,5 @@ public class AnswerDto {
         private long questionId;
         private String content;
 
-//        private Answer.AnswerStatus answerStatus;
     }
 }
