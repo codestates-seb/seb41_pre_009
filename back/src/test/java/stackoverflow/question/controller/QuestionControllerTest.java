@@ -63,7 +63,6 @@ public class QuestionControllerTest {
                 "I've been using a little python script I wrote to manage debt amongst my roommates.");
         QuestionDto.Response responseBody = new QuestionDto.Response(1L,
                 1L,
-                "홍길동",
                 "Algorithm to simplify a weighted directed graph of debts",
                 "I've been using a little python script I wrote to manage debt amongst my roommates.",
                 0,
@@ -108,7 +107,6 @@ public class QuestionControllerTest {
 
         QuestionDto.Response response = new QuestionDto.Response(1L,
                 1L,
-                "홍길동",
                 "Patch:Algorithm to simplify a weighted directed graph of debts",
                 "Patch:I've been using a little python script I wrote to manage debt amongst my roommates.",
                 0,
@@ -154,7 +152,6 @@ public class QuestionControllerTest {
 
         QuestionDto.Response response = new QuestionDto.Response(1L,
                 1L,
-                "홍길동",
                 "Algorithm to simplify a weighted directed graph of debts",
                 "I've been using a little python script I wrote to manage debt amongst my roommates.",
                 1,
