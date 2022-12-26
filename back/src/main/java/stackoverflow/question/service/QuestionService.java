@@ -10,11 +10,6 @@ import stackoverflow.question.repository.QuestionRepository;
 
 import java.util.Optional;
 
-/**
- *  - 메서드 구현
- *  - DI 적용
- *  - Spring Data JPA 적용
- */
 @Service
 public class QuestionService {
     private final MemberService memberService;
@@ -28,6 +23,7 @@ public class QuestionService {
     public Question createQuestion(Question question) {
         //회원이 존재하는지 확인
         memberService.findVerifiedMember(question.getMember().getMemberId());
+
 
         return questionRepository.save(question);
     }
@@ -44,9 +40,11 @@ public class QuestionService {
     public Question findQuestion(long questionId) {
         Question findQuestion = findVerifiedQuestionByQuery(questionId);
 
+
         //조회할 때마다 조회 수 1 증가
         findQuestion.setView(findQuestion.getView() + 1);
         questionRepository.save(findQuestion);
+
         return findQuestion;
     }
 
@@ -77,4 +75,6 @@ public class QuestionService {
 
         return findQuestion;
     }
+
+
 }

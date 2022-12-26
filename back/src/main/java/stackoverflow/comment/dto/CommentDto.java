@@ -7,6 +7,7 @@ import stackoverflow.validator.NotSpace;
 public class CommentDto {
 
     @Getter
+    @AllArgsConstructor
     public static class Post {
         @NotSpace(message = "내용을 채워주세요.")
         private String text;
@@ -27,6 +28,7 @@ public class CommentDto {
     @Getter
     public static class Response {
         private long commentId;
-        private String content;
+        private String text;
+        //private String name;
     }
 }

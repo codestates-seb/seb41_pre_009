@@ -13,6 +13,7 @@ import stackoverflow.question.entity.Question;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,8 @@ public class Answer extends Auditable {
     @Column
     private Long answerVoteCount;
 
-    @Column(length = 100, nullable = false)
+    @Column(nullable = false)
+    @Size(min = 30)
     private String content;
 
     @ManyToOne
@@ -44,8 +46,28 @@ public class Answer extends Auditable {
     @OneToMany(mappedBy = "answer")
     private List<Comment> comments = new ArrayList<>();
 
-    public Answer(Long answerVoteCount, String content) {
+    //Answer와 연관관계를 맺을 대상인 member 객체
+    public void setMember(Member member) {
+        this.member = member;
+        if (!this.member.getAnswers().contains(this)) {
+            this.member.getAnswers().add(this);
+        }
+    }
+
+    //Answer와 연관관계를 맺을 대상인 question 객체
+    public void setQuestion(Question question) {
+        this.question = question;
+        if (!this.question.getAnswers().contains(this)) {
+            this.question.getAnswers().add(this);
+        }
+    }
+
+    /*public Answer(Long answerVoteCount, String content) {
         this.answerVoteCount = answerVoteCount;
+        this.content = content;
+    }*/
+
+    public Answer(String content) {
         this.content = content;
     }
 }

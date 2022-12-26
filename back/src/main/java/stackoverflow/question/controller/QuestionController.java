@@ -1,7 +1,6 @@
 package stackoverflow.question.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -11,14 +10,10 @@ import stackoverflow.question.dto.QuestionDto;
 import stackoverflow.question.entity.Question;
 import stackoverflow.question.mapper.QuestionMapper;
 import stackoverflow.question.service.QuestionService;
-import stackoverflow.response.MultiResponseDto;
 import stackoverflow.response.SingleResponseDto;
-import stackoverflow.utils.UriCreator;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
-import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequestMapping("/questions")
@@ -42,9 +37,7 @@ public class QuestionController {
         Question question = mapper.questionPostDtoToQuestion(requestBody);
 
         Question createdQuestion = questionService.createQuestion(question);
-        //URI location = UriCreator.createUri(QUESTION_DEFAULT_URL, createdQuestion.getQuestionId());
 
-        //return ResponseEntity.created(location).build();
         return new ResponseEntity<>(
                 new SingleResponseDto<>(mapper.questionToQuestionResponseDto(createdQuestion)),
                 HttpStatus.CREATED);
@@ -89,4 +82,6 @@ public class QuestionController {
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+
 }

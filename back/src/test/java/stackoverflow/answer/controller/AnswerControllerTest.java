@@ -18,8 +18,11 @@ import stackoverflow.answer.dto.AnswerDto;
 import stackoverflow.answer.entity.Answer;
 import stackoverflow.answer.mapper.AnswerMapper;
 import stackoverflow.answer.service.AnswerService;
+import stackoverflow.comment.entity.Comment;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
@@ -46,10 +49,10 @@ class AnswerControllerTest {
     @Test
     void postAnswerTest() throws Exception {
         // given
-        AnswerDto.Post post = new AnswerDto.Post("홍길동", 1);
-        AnswerDto.Response responseBody = new AnswerDto.Response(1L,
-                "홍길동",
-                1);
+        List<Comment> comments = new ArrayList<>();
+        AnswerDto.Post post = new AnswerDto.Post(1L, 1L,"안녕하세요 답변 드리겠습니다. 이것은 예시입니다");
+        AnswerDto.Response responseBody = new AnswerDto.Response(1L,1L,1L,
+                "안녕하세요 답변 드리겠습니다. 이것은 예시입니다",comments);
 
         // Stubbing by Mockito
         given(mapper.answerPostDtoToAnswer(Mockito.any(AnswerDto.Post.class))).willReturn(new Answer());
@@ -72,25 +75,27 @@ class AnswerControllerTest {
         // then
         MvcResult result = actions
                 .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.data.memberId").value(post.getMemberId()))
+                .andExpect(jsonPath("$.data.questionId").value(post.getQuestionId()))
                 .andExpect(jsonPath("$.data.content").value(post.getContent()))
-                .andExpect(jsonPath("$.data.answerVoteCount").value(post.getAnswerVoteCount()))
+                //.andExpect(jsonPath("$.data.answerVoteCount").value(post.getAnswerVoteCount()))
                 .andReturn();
 
-//        System.out.println(result.getResponse().getContentAsString());
     }
 
 @Test
     void patchAnswerTest() throws Exception {
         // given
         long answerId = 1L;
+        List<Comment> comments = new ArrayList<>();
+        AnswerDto.Patch patch = new AnswerDto.Patch(1L,
+            "이것은 수정 내용입니다. 이것은 예시입니다.");
 
-    AnswerDto.Patch patch = new AnswerDto.Patch(0,
-            "홍길동",
-            1);
-
-    AnswerDto.Response response = new AnswerDto.Response(1L,
-            "홍길동",
-            1);
+        AnswerDto.Response response = new AnswerDto.Response(1L,
+            1L,
+            1L,
+            "이것은 수정 내용입니다. 이것은 예시입니다.",
+                comments);
 
         // Stubbing by Mockito
         given(mapper.answerPatchDtoToAnswer(Mockito.any(AnswerDto.Patch.class))).willReturn(new Answer());
@@ -115,6 +120,7 @@ class AnswerControllerTest {
 
         // then
         actions.andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.answerId").value(patch.getAnswerId()))
                 .andExpect(jsonPath("$.data.content").value(patch.getContent()));
     }
 
@@ -122,12 +128,15 @@ class AnswerControllerTest {
     void getAnswerTest() throws Exception {
         // given
         long answerId = 1L;
-        Answer answer = new Answer(1L, "홍길동");
+        List<Comment> comments = new ArrayList<>();
+        Answer answer = new Answer("안녕하세요 답변 드리겠습니다. 이것은 Get 예시입니다");
         answer.setAnswerId(answerId);
 
         AnswerDto.Response response = new AnswerDto.Response(1L,
-                "홍길동",
-                1);
+                1L,
+                1L,
+                "안녕하세요 답변 드리겠습니다. 이것은 Get 예시입니다",
+                comments);
 
         // Stubbing by Mockito
         given(answerService.findAnswer(Mockito.anyLong())).willReturn(new Answer());
@@ -143,8 +152,8 @@ class AnswerControllerTest {
 
         // then
         actions.andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.content").value(answer.getContent()))
-                .andExpect(jsonPath("$.data.answerVoteCount").value(answer.getAnswerVoteCount()));
+                .andExpect(jsonPath("$.data.content").value(answer.getContent()));
+                //.andExpect(jsonPath("$.data.answerVoteCount").value(answer.getAnswerVoteCount()));
     }
 
     @Test

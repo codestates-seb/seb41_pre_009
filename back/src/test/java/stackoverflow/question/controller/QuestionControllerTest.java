@@ -18,6 +18,7 @@ import stackoverflow.answer.dto.AnswerDto;
 import stackoverflow.answer.entity.Answer;
 import stackoverflow.answer.mapper.AnswerMapper;
 import stackoverflow.answer.service.AnswerService;
+import stackoverflow.comment.entity.Comment;
 import stackoverflow.member.entity.Member;
 import stackoverflow.question.dto.QuestionDto;
 import stackoverflow.question.entity.Question;
@@ -25,6 +26,8 @@ import stackoverflow.question.mapper.QuestionMapper;
 import stackoverflow.question.service.QuestionService;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
@@ -50,6 +53,7 @@ public class QuestionControllerTest {
     @Test
     void postQuestionTest() throws Exception {
         //given
+        List<Answer> answers = new ArrayList<>();
         Member member = new Member("hgd@gmail.com",
                 "홍길동",
                 "1234");
@@ -59,10 +63,12 @@ public class QuestionControllerTest {
                 "I've been using a little python script I wrote to manage debt amongst my roommates.");
         QuestionDto.Response responseBody = new QuestionDto.Response(1L,
                 1L,
+                "홍길동",
                 "Algorithm to simplify a weighted directed graph of debts",
                 "I've been using a little python script I wrote to manage debt amongst my roommates.",
                 0,
-                Question.QuestionStatus.QUESTION_ACCEPTED);
+                Question.QuestionStatus.QUESTION_ACCEPTED,
+                answers);
         // Stubbing by Mockito
         given(mapper.questionPostDtoToQuestion(Mockito.any(QuestionDto.Post.class))).willReturn(new Question());
 
@@ -94,7 +100,7 @@ public class QuestionControllerTest {
     void patchQuestionTest() throws Exception {
         // given
         long questionId = 1L;
-
+        List<Answer> answers = new ArrayList<>();
         QuestionDto.Patch patch = new QuestionDto.Patch(1L,
                 "Patch:Algorithm to simplify a weighted directed graph of debts",
                 "Patch:I've been using a little python script I wrote to manage debt amongst my roommates.",
@@ -102,10 +108,12 @@ public class QuestionControllerTest {
 
         QuestionDto.Response response = new QuestionDto.Response(1L,
                 1L,
+                "홍길동",
                 "Patch:Algorithm to simplify a weighted directed graph of debts",
                 "Patch:I've been using a little python script I wrote to manage debt amongst my roommates.",
                 0,
-                Question.QuestionStatus.QUESTION_ACCEPTED);
+                Question.QuestionStatus.QUESTION_ACCEPTED,
+                answers);
 
         // Stubbing by Mockito
         given(mapper.questionPatchDtoToQuestion(Mockito.any(QuestionDto.Patch.class))).willReturn(new Question());
@@ -138,6 +146,7 @@ public class QuestionControllerTest {
     void getQuestionTest() throws Exception {
         // given
         long questionId = 1L;
+        List<Answer> answers = new ArrayList<>();
         Question question = new Question("Algorithm to simplify a weighted directed graph of debts",
                 "I've been using a little python script I wrote to manage debt amongst my roommates.",
                 0);
@@ -145,10 +154,12 @@ public class QuestionControllerTest {
 
         QuestionDto.Response response = new QuestionDto.Response(1L,
                 1L,
+                "홍길동",
                 "Algorithm to simplify a weighted directed graph of debts",
                 "I've been using a little python script I wrote to manage debt amongst my roommates.",
                 1,
-                Question.QuestionStatus.QUESTION_ACCEPTED);
+                Question.QuestionStatus.QUESTION_ACCEPTED,
+                answers);
 
         // Stubbing by Mockito
         given(questionService.findQuestion(Mockito.anyLong())).willReturn(new Question());

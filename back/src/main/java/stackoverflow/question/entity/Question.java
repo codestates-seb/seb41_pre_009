@@ -34,8 +34,8 @@ public class Question extends Auditable{
     @Column
     private int view = 0;
 
-    @Column
-    private int questionVoteCount = 0;
+    /*@Column
+    private int vote = 0;*/
 
     @Enumerated(value = EnumType.STRING)
     @Column(length = 20, nullable = false)
@@ -43,7 +43,6 @@ public class Question extends Auditable{
 
     @OneToMany(mappedBy = "question")
     List<Answer> answers = new ArrayList<>();
-
 
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
