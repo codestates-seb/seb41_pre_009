@@ -4,12 +4,21 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import stackoverflow.validator.NotSpace;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
+
 public class CommentDto {
 
     @Getter
     @AllArgsConstructor
     public static class Post {
-        @NotSpace(message = "내용을 채워주세요.")
+        @Positive
+        private long memberId;
+
+        @Positive
+        private long answerId;
+
+        @NotBlank(message = "내용을 채워주세요.")
         private String text;
     }
 
@@ -27,8 +36,9 @@ public class CommentDto {
     @AllArgsConstructor
     @Getter
     public static class Response {
+        private long memberId;
+        private long answerId;
         private long commentId;
         private String text;
-        //private String name;
     }
 }

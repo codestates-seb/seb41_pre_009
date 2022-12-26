@@ -24,10 +24,6 @@ public class Comment extends Auditable {
     @Column(length = 500, nullable = false)
     private String text;
 
-    /*Member name
-    @Column
-    private String name;*/
-
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
@@ -36,7 +32,6 @@ public class Comment extends Auditable {
     @JoinColumn(name = "ANSWER_ID")
     private Answer answer;
 
-    //댓글 내용(comment)을 입력받아 돌려주는 생성자
     public Comment(String text) {
         this.text = text;
     }
