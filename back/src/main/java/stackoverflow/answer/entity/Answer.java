@@ -25,17 +25,10 @@ public class Answer extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long answerId;
+
     @Column(nullable = false)
     @Size(min=30)
     private String content;
-    @Column
-    private int answerVoteCount = 0;
-
-/*
-    @Enumerated(value = EnumType.STRING)
-    @Column(length = 20, nullable = false)
-    private Answer.AnswerStatus answerStatus = Answer.AnswerStatus.ANSWER_ACCEPTED;
-*/
 
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
@@ -44,7 +37,6 @@ public class Answer extends Auditable {
     @ManyToOne
     @JoinColumn(name = "QUESTION_ID")
     private Question question;
-
 
     @OneToMany(mappedBy = "answer")
     private List<Comment> comments = new ArrayList<>();
@@ -67,15 +59,4 @@ public class Answer extends Auditable {
     public Answer(String content) {
         this.content = content;
     }
-
-   /* public enum AnswerStatus {
-        ANSWER_ACCEPTED("등록된 질문"),
-        ANSWER_DELETE("삭제된 질문");
-
-        @Getter
-        private String status;
-        AnswerStatus(String status) {
-            this.status = status;
-        }
-    }*/
 }

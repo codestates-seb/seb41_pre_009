@@ -43,10 +43,7 @@ public class AnswerDto {
     public static class Response {
         private long answerId;
         private long memberId;
-
         private long questionId;
         private String content;
-
-//        private Answer.AnswerStatus answerStatus;
     }
 }
