@@ -17,7 +17,13 @@ public class MemberDto {
 
         @NotBlank(message = "이름은 공백이 아니어야 합니다.")
         private String name;
+        private String password;
 
+        public Post(String email, String name, String password) {
+            this.email = email;
+            this.name = name;
+            this.password = password;
+        }
     }
 
     @Getter
@@ -27,6 +33,7 @@ public class MemberDto {
 
         @NotSpace(message = "회원 이름은 공백이 아니어야 합니다")
         private String name;
+        private String password;
 
         private Member.MemberStatus memberStatus;
 
@@ -42,7 +49,7 @@ public class MemberDto {
         private long memberId;
         private String email;
         private String name;
-        private String memberStatus;
-//        private String passWord;
+        private String password;
+        private Member.MemberStatus memberStatus;
     }
 }
