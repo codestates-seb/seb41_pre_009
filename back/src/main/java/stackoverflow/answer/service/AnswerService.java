@@ -8,9 +8,9 @@ import stackoverflow.answer.repository.AnswerRepository;
 import stackoverflow.exception.BusinessLogicException;
 import stackoverflow.exception.ExceptionCode;
 import stackoverflow.member.service.MemberService;
+import stackoverflow.question.service.QuestionService;
 
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -18,15 +18,21 @@ import java.util.Optional;
 public class AnswerService {
     private final MemberService memberService;
     private final AnswerRepository answerRepository;
+    private final QuestionService questionService;
 
-    public AnswerService(MemberService memberService, AnswerRepository answerRepository) {
+    public AnswerService(MemberService memberService, AnswerRepository answerRepository, QuestionService questionService) {
         this.memberService = memberService;
         this.answerRepository = answerRepository;
+        this.questionService = questionService;
     }
 
     public Answer createAnswer(Answer answer) {
         //회원이 존재하는지 확인
         memberService.findVerifiedMember(answer.getMember().getMemberId());
+
+        //질문이 존재하는지 확인
+        questionService.findVerifiedQuestion(answer.getQuestion().getQuestionId());
+
 
         return answerRepository.save(answer);
     }
@@ -35,10 +41,6 @@ public class AnswerService {
         // 조회하려는 답변이 검증된 답변인지 확인(존재하는 답변인지 확인 등)
         Answer findAnswer = findVerifiedAnswer(answer.getAnswerId());
 
-       /* Optional.ofNullable(answer.getMember())
-                .ifPresent(member -> findAnswer.setMember(member));
-        Optional.ofNullable(answer.getQuestion())
-                .ifPresent(questiond -> findAnswer.setQuestion(questiond));*/
         Optional.ofNullable(answer.getContent())
                 .ifPresent(content -> findAnswer.setContent(content));
 

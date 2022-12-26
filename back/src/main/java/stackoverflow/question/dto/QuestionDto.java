@@ -2,10 +2,7 @@ package stackoverflow.question.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
-import stackoverflow.answer.dto.AnswerDto;
-import stackoverflow.comment.dto.CommentDto;
-import stackoverflow.member.dto.MemberDto;
+
 import stackoverflow.question.entity.Question;
 import stackoverflow.validator.NotSpace;
 
