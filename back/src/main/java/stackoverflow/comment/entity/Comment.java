@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import stackoverflow.answer.entity.Answer;
+import stackoverflow.audit.Auditable;
 import stackoverflow.member.entity.Member;
 
 
