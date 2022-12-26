@@ -41,6 +41,7 @@ public class Question extends Auditable{
     private int view = 0;
 
 
+
     @Enumerated(value = EnumType.STRING)
     @Column(length = 20, nullable = false)
     private Question.QuestionStatus questionStatus = QuestionStatus.QUESTION_ACCEPTED;
