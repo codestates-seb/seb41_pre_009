@@ -5,29 +5,31 @@ import lombok.Getter;
 import stackoverflow.member.entity.Member;
 import stackoverflow.validator.NotSpace;
 
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
+
 
 public class AnswerDto {
     @Getter
+    @AllArgsConstructor
     public static class Post {
-        @NotSpace(message = "내용을 채워주세요.")
+        @Positive
+        private long memberId;
+        @Positive
+        private long questionId;
+        @NotSpace(message = "내용은 공백이 아니어야 합니다.")
+        @Size(min = 30, message = "내용은 최소 30글자 이상 작성해야 합니다.")
         private String content;
-        private long answerVoteCount;
-
-
-        public Post(String content, long answerVoteCount) {
-            this.content = content;
-            this.answerVoteCount = answerVoteCount;
-        }
-  }
 
     @Getter
     @AllArgsConstructor
     public static class Patch {
         private long answerId;
-
-        @NotSpace(message = "내용을 채워주세요.")
+        @NotSpace(message = "내용은 공백이 아니어야 합니다.")
+        @Size(min = 30, message = "내용은 최소 30글자 이상 작성해야 합니다.")
         private String content;
-        private long answerVoteCount;
+
+//        private Answer.AnswerStatus answerStatus;
 
         public void setAnswerId(long answerId) {
             this.answerId = answerId;
@@ -38,9 +40,8 @@ public class AnswerDto {
     @Getter
     public static class Response {
         private long answerId;
+        private long memberId;
+        private long questionId;
         private String content;
-        private long answerVoteCount;
-
-
     }
 }
