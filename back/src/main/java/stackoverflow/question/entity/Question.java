@@ -37,13 +37,13 @@ public class Question extends Auditable{
     @Column
     private int questionVoteCount = 0;
 
+
     @Enumerated(value = EnumType.STRING)
     @Column(length = 20, nullable = false)
     private Question.QuestionStatus questionStatus = QuestionStatus.QUESTION_ACCEPTED;
 
     @OneToMany(mappedBy = "question")
     List<Answer> answers = new ArrayList<>();
-
 
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")

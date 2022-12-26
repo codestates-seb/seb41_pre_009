@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import stackoverflow.answer.entity.Answer;
 import stackoverflow.comment.dto.CommentDto;
 import stackoverflow.comment.entity.Comment;
 import stackoverflow.comment.mapper.CommentMapper;
@@ -32,9 +33,6 @@ public class CommentController {
     @PostMapping
     public ResponseEntity postComment(@Valid @RequestBody CommentDto.Post requestBody) {
         Comment comment = commentService.createComment(mapper.commentPostDtoToComment(requestBody));
-//        URI location = UriCreator.createUri(Answer_DEFAULT_URL, answer.getAnswerId());
-
-//        return ResponseEntity.created(location).build();
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(mapper.commentToCommentResponseDto(comment))
