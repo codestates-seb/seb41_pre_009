@@ -21,7 +21,6 @@ public class AnswerDto {
         @Size(min = 30, message = "내용은 최소 30글자 이상 작성해야 합니다.")
         private String content;
 
-
     @Getter
     @AllArgsConstructor
     public static class Patch {
@@ -42,9 +41,7 @@ public class AnswerDto {
     public static class Response {
         private long answerId;
         private long memberId;
-
         private long questionId;
         private String content;
-
     }
 }

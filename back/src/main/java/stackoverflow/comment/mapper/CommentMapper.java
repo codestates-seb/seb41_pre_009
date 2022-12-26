@@ -10,6 +10,8 @@ import java.util.List;
 
 import java.util.List;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface CommentMapper {
     default Comment commentPostDtoToComment(CommentDto.Post requestBody){
@@ -21,7 +23,7 @@ public interface CommentMapper {
         comment.setText(requestBody.getText());
         return comment;
     };
-
+    
     Comment commentPatchDtoToComment(CommentDto.Patch requestBody);
     Object commentToCommentResponseDto(Comment comment);
 

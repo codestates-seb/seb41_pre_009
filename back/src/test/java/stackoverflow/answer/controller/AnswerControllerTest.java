@@ -20,7 +20,6 @@ import stackoverflow.answer.mapper.AnswerMapper;
 import stackoverflow.answer.service.AnswerService;
 import stackoverflow.member.entity.Member;
 
-
 import java.net.URI;
 
 import static org.mockito.BDDMockito.given;
@@ -57,6 +56,7 @@ class AnswerControllerTest {
                 1L,
                 1L,"홍길동은 아버지를 아버지라 부르지 못했다. 어머니는 어머니라 불렀을까? 형은 뭐라고 불렀을까?");
 
+
         // Stubbing by Mockito
         given(mapper.answerPostDtoToAnswer(Mockito.any(AnswerDto.Post.class))).willReturn(new Answer());
 
@@ -78,7 +78,6 @@ class AnswerControllerTest {
         // then
         MvcResult result = actions
                 .andExpect(status().isCreated())
-
                 .andExpect(jsonPath("$.data.memberId").value(post.getMemberId()))
                 .andExpect(jsonPath("$.data.questionId").value(post.getQuestionId()))
                 .andExpect(jsonPath("$.data.content").value(post.getContent()))
@@ -135,6 +134,7 @@ class AnswerControllerTest {
         AnswerDto.Response response = new AnswerDto.Response(1L,
                 1L,
                 1L,"홍길동");
+
         // Stubbing by Mockito
         given(answerService.findAnswer(Mockito.anyLong())).willReturn(new Answer());
         given(mapper.answerToAnswerResponseDto(Mockito.any(Answer.class))).willReturn(response);
@@ -154,7 +154,6 @@ class AnswerControllerTest {
 
     @Test
     void deleteAnswerTest() throws Exception {
-
         // given
         long answerId = 1L;
 
