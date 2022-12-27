@@ -12,6 +12,8 @@ import stackoverflow.answer.mapper.AnswerMapper;
 import stackoverflow.answer.service.AnswerService;
 import stackoverflow.member.service.MemberService;
 
+import stackoverflow.question.entity.Question;
+import stackoverflow.question.service.QuestionService;
 import stackoverflow.response.MultiResponseDto;
 import stackoverflow.response.SingleResponseDto;
 

@@ -29,11 +29,13 @@ public class AnswerService {
 
 
     public Answer createAnswer(Answer answer) {
-        //회원이 존재하는지 확인
-        memberService.findVerifiedMember(answer.getMember().getMemberId());
+        return answerRepository.save(answer);
+    }
 
-        //질문이 존재하는지 확인
-        questionService.findVerifiedQuestion(answer.getQuestion().getQuestionId());
+    public Answer createAnswer(Answer answer, long answerWriterId) {
+        Member member = memberRepository.findByMemberId(answerWriterId);
+        answer.setMember(member);
+
 
         return answerRepository.save(answer);
     }

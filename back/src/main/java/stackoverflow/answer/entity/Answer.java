@@ -27,6 +27,9 @@ public class Answer extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long answerId;
 
+    @Column(nullable = false, name="answer_writer_id")
+    private long answerWriterId;
+
     @Column
     private Long answerVoteCount;
 

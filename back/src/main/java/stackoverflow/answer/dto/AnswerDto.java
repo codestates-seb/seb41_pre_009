@@ -15,11 +15,7 @@ public class AnswerDto {
     @Getter
     @AllArgsConstructor
     public static class Post {
-        @Positive
-        private long memberId;
-
-        @Positive
-        private long questionId;
+        private long answerWriterId;
 
         @NotSpace(message = "내용을 채워주세요.")
         private String content;

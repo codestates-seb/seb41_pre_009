@@ -25,6 +25,10 @@ public class Question extends Auditable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long questionId;
 
+    @Column(nullable = false, name="question_writer_id")
+    private long questionWriterId;
+
+
     @Column(nullable = false)
     @Size(min = 15, max = 150)
     private String title;
