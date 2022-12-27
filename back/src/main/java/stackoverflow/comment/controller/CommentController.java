@@ -1,6 +1,7 @@
 package stackoverflow.comment.controller;
 
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -10,12 +11,14 @@ import stackoverflow.comment.dto.CommentDto;
 import stackoverflow.comment.entity.Comment;
 import stackoverflow.comment.mapper.CommentMapper;
 import stackoverflow.comment.service.CommentService;
+import stackoverflow.response.MultiResponseDto;
 import stackoverflow.response.SingleResponseDto;
 import stackoverflow.utils.UriCreator;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/comments")
@@ -60,7 +63,7 @@ public class CommentController {
                 HttpStatus.OK);
     }
 
-    /*@GetMapping
+    @GetMapping
     public ResponseEntity getComments(@Positive @RequestParam int page,
                                      @Positive @RequestParam int size) {
         Page<Comment> pageComments = commentService.findComments(page - 1, size);
@@ -70,7 +73,7 @@ public class CommentController {
                 new MultiResponseDto<>(mapper.commentsToCommentResponseDtos(comments),
                         pageComments),
                 HttpStatus.OK);
-    }*/
+    }
 
     @DeleteMapping("/{comment-id}")
     public ResponseEntity deleteComment(@PathVariable("comment-id") long commentId) {

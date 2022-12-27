@@ -1,6 +1,9 @@
 package stackoverflow.comment.service;
 
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import stackoverflow.answer.service.AnswerService;
@@ -50,10 +53,10 @@ public class CommentService {
         return findVerifiedCommentByQuery(commentId);
     }
 
-   /* public Page<comment> findcomments(int page, int size) {
+    public Page<Comment> findComments(int page, int size) {
         return commentRepository.findAll(PageRequest.of(page, size,
                 Sort.by("commentId").descending()));
-    }*/
+    }
 
     public void deleteComment(long commentId) {
         Comment comment = findVerifiedComment(commentId);
