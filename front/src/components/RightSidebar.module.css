@@ -1,4 +1,4 @@
-li {
+.member {
     display: flex;
     flex-direction: column;
     margin: 10px;
@@ -14,7 +14,7 @@ li {
     border: 1px solid rgba(0, 0, 0, 0.4);
 }
 
-a {
+.member-profile {
     width: 200px;
     height: 200px;
     text-align: center;

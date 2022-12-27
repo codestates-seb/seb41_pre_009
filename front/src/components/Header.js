@@ -1,5 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+
+import { authActions } from "../redux/auth";
 
 import styles from "./Header.module.css";
 import { Avatar } from "@mui/material";
@@ -14,6 +17,15 @@ import TableRowsIcon from "@mui/icons-material/TableRows";
 // import "./App.css";
 
 function Header() {
+
+  const dispatch = useDispatch();
+
+  const isAuth = useSelector(state => state.auth.isAuthenticated);
+
+  const logoutHandler = () => {
+    dispatch(authActions.logout());
+  };
+
   return (
     <div className={styles.header}>
       <div className={styles["header-left"]}>
@@ -35,14 +47,23 @@ function Header() {
         </div>
         <div className={styles["header-right"]}>
           <div className={styles["header-right-container"]}>
-            <Avatar />
-            <InboxIcon />
-            <EmojiEventsIcon />
-            <HelpIcon />
-            <AcUnitIcon />
-            <TableRowsIcon />
-            <Link to="/loginpage" >로그인</Link>
-            <Link to="/signuppage">회원가입</Link>
+            {isAuth && (
+              <div>
+                <Avatar />
+                <InboxIcon />
+                <EmojiEventsIcon />
+                <HelpIcon />
+                <AcUnitIcon />
+                <TableRowsIcon />
+                <button onClick={logoutHandler}>로그아웃</button>
+              </div>
+            )}
+            {!isAuth && (
+              <div>
+                <Link to="/loginpage" >로그인</Link>
+                <Link to="/signuppage">회원가입</Link>
+              </div>
+            )}
           </div>
         </div>
       </div>

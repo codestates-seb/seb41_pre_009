@@ -1,0 +1,27 @@
+.signupsidebar-container {
+    flex-direction: row;
+    justify-content: center;
+    margin-right: 40px;
+  }
+  
+  .signupleft {
+    align-items: center;
+    margin-bottom: 24px;
+    font-size: 15px;
+  }
+  
+  .signup-icon {
+    margin-right: 5px;
+    align-items: center;
+    font-size: 15px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  
+  .signup-item {
+    font-size: small;
+    margin-bottom: 5px;
+    margin-left: 4px;
+  }

@@ -1,0 +1,13 @@
+.big-container {
+    display: flex;
+    justify-content: center;
+}
+
+.question-create-container {
+    width: 50%;
+    font-size: 12px;
+}
+
+.question-create-container > form {
+    width: 100%;
+}

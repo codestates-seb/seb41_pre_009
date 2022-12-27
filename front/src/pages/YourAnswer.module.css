@@ -1,0 +1,8 @@
+/* 에디터 박스칸 가로 길이 정해줌 나중에 재 배치 확인! */
+.Editor {
+    width: 800px;
+  }
+  
+  .YourAnswer-button > button:hover {
+    background-color: hsl(206, 100%, 40%);
+  }
