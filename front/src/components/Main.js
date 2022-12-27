@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import Question from "./Question";
 
@@ -7,15 +8,16 @@ import { FilterList } from "@mui/icons-material";
 import styles from './Main.module.css';
 
 const Main = () => {
-    const [isLogin, setIsLogin] = useState(false);
+
+    const isAuth = useSelector(state => state.auth.isAuthenticated);
 
     return (
         <div className={styles.main}>
             <div className={styles['main-container']}>
                 <div className={styles['main-top']}>
                     <h2>All Questions</h2>
-                    {!isLogin && <Link to="/loginpage"><button>Ask Question</button></Link>}
-                    {isLogin && <Link to="/questionpage"><button>Ask Question</button></Link>}
+                    {!isAuth && <Link to="/loginpage"><button>Ask Question</button></Link>}
+                    {isAuth && <Link to="/askquestionpage"><button>Ask Question</button></Link>}
                 </div>
                 <div className={styles['main-desc']}>
                     <p>10 questions</p>

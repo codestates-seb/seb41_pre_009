@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Avatar } from "@mui/material";
 import styles from "./Question.module.css";
 
@@ -21,7 +22,9 @@ const Question = () => {
         </div>
         <div className={styles.answer}>
           <h3 className={styles["qeustion-title"]}>
-            <a>question title 질문 저희 조 잘 할 수 있을까요?</a>
+            <Link to="/mainquestion">
+              <p>question title 질문 저희 조 잘 할 수 있을까요?</p>
+            </Link>
             <div className={styles["answer-title"]}>
               This is answer 네 그럼요!!!!!가보자9
             </div>

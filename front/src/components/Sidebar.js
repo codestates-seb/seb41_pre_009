@@ -21,9 +21,9 @@ const Sidebar = () => {
                                 <Link to="/">Questions</Link>
                             </div>
                             <div className={styles.tags}>
-                                <p>Tags</p>
-                                <p>Users</p>
-                                <p>Companies</p>
+                                <Link to="/loadingpage">Tags</Link>
+                                <Link to="/loadingpage">Users</Link>
+                                <a href='https://www.codestates.com'>Companies</a>
                             </div>
                         </div>
                     </div>
