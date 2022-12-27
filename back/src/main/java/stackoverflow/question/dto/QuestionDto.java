@@ -2,9 +2,12 @@ package stackoverflow.question.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import stackoverflow.answer.dto.AnswerDto;
 import stackoverflow.answer.entity.Answer;
 import stackoverflow.comment.dto.CommentDto;
+import stackoverflow.member.dto.MemberDto;
 import stackoverflow.member.entity.Member;
 import stackoverflow.question.entity.Question;
 import stackoverflow.validator.NotSpace;
@@ -17,10 +20,11 @@ import java.util.List;
 public class QuestionDto {
     //질문 생성 Dto
     @Getter
+    @Setter
+    @NoArgsConstructor
     @AllArgsConstructor
     public static class Post {
-        @Positive
-        private long memberId;
+        private long questionWriterId;
 
         @NotBlank(message = "제목은 공백이 아니어야 합니다.")
         @Size(min = 15, max = 150, message = "제목은 최소 15 글자, 최대 150 글자 작성할 수 있습니다.")
@@ -34,7 +38,9 @@ public class QuestionDto {
 
     //질문 수정 Dto
     @Getter
+    @Setter
     @AllArgsConstructor
+    @NoArgsConstructor
     public static class Patch {
         private long questionId;
 
@@ -56,18 +62,16 @@ public class QuestionDto {
     //질문 상세 조회 Dto
     @AllArgsConstructor
     @Getter
+    @Setter
+    @NoArgsConstructor
     public static class Response {
-        private long questionId; //질문 Id
-        private long memberId; //질문 생성한 유저 고유 Id
-
-        //private String name; //질문 생성한 유저 이름
-        private String title; //질문 제목
-        private String content; //질문 내용
-        private int view; //질문 조회 수
-        private Question.QuestionStatus questionStatus; //질문 상태
-
-        //private int vote;
-        private List<Answer> answers; //질문에 달린 답변 정보
+        private long questionId;
+        private long questionWriterId;
+        private String title;
+        private String content;
+        private int view;
+        private Question.QuestionStatus questionStatus;
+        private List<AnswerDto.Response> answers;
     }
 
 }

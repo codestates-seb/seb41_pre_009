@@ -14,11 +14,9 @@ import stackoverflow.member.service.MemberService;
 
 import stackoverflow.response.MultiResponseDto;
 import stackoverflow.response.SingleResponseDto;
-import stackoverflow.utils.UriCreator;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -27,21 +25,29 @@ import java.util.List;
 public class AnswerController {
     private final static String Answer_DEFAULT_URL = "/answers";
     private AnswerService answerService;
+    private QuestionService questionService;
     private AnswerMapper mapper;
-    private final MemberService memberService;
 
-    public AnswerController(AnswerService answerService, AnswerMapper mapper, MemberService memberService) {
+    public AnswerController(AnswerService answerService, QuestionService questionService, AnswerMapper mapper) {
         this.answerService = answerService;
+        this.questionService = questionService;
         this.mapper = mapper;
-        this.memberService = memberService;
     }
 
-    @PostMapping
-    public ResponseEntity postAnswer(@Valid @RequestBody AnswerDto.Post requestBody) {
-        Answer answer = answerService.createAnswer(mapper.answerPostDtoToAnswer(requestBody));
-       
+    @PostMapping("/reply/{question-id}")
+    public ResponseEntity postAnswer(@Valid @RequestBody AnswerDto.Post requestBody,
+                                     @PathVariable("question-id") @Positive long questionId) {
+        Answer answer = mapper.answerPostDtoToAnswer(requestBody);
+
+        long answerWriterId = answer.getAnswerWriterId();
+        Question question = questionService.findQuestion(questionId);
+
+        answer.setQuestion(question);
+
+        Answer createdAnswer = answerService.createAnswer(answer,answerWriterId);
+
        return new ResponseEntity<>(
-                new SingleResponseDto<>(mapper.answerToAnswerResponseDto(answer))
+                new SingleResponseDto<>(mapper.answerToAnswerResponseDto(createdAnswer))
                 , HttpStatus.CREATED);
     }
 

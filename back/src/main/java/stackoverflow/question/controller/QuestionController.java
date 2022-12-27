@@ -41,11 +41,12 @@ public class QuestionController {
     }
 
 
-    @PostMapping
+    @PostMapping("/ask")
     public ResponseEntity postQuestion(@RequestBody QuestionDto.Post requestBody) {
         Question question = mapper.questionPostDtoToQuestion(requestBody);
 
-        Question createdQuestion = questionService.createQuestion(question);
+        long questionWriterId = question.getQuestionWriterId();
+        Question createdQuestion = questionService.createQuestion(question,questionWriterId);
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(mapper.questionToQuestionResponseDto(createdQuestion)),

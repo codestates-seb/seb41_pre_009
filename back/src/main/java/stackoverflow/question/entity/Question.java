@@ -1,5 +1,6 @@
 package stackoverflow.question.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,6 +16,7 @@ import java.util.List;
 
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -34,8 +36,6 @@ public class Question extends Auditable{
     @Column
     private int view = 0;
 
-    /*@Column
-    private int vote = 0;*/
 
     @Enumerated(value = EnumType.STRING)
     @Column(length = 20, nullable = false)

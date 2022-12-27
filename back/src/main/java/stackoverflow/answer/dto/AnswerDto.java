@@ -24,13 +24,6 @@ public class AnswerDto {
         @NotSpace(message = "내용을 채워주세요.")
         private String content;
 
-        //private long answerVoteCount;
-
-
-        /*public Post(String content, long answerVoteCount) {
-            this.content = content;
-            this.answerVoteCount = answerVoteCount;
-        }*/
     }
 
     @Getter
@@ -40,7 +33,6 @@ public class AnswerDto {
 
         @NotSpace(message = "내용을 채워주세요.")
         private String content;
-        //private long answerVoteCount;
 
         public void setAnswerId(long answerId) {
             this.answerId = answerId;
@@ -51,11 +43,9 @@ public class AnswerDto {
     @Getter
     public static class Response {
         private long answerId;
-        private long memberId; //추가함
-        private long questionId; //추가함
+        private long answerWriterId;
         private String content;
 
-        private List<Comment> comments; //추가함
-        //private long answerVoteCount;
+        private List<Comment> comments;
     }
 }

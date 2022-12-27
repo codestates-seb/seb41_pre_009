@@ -10,8 +10,8 @@ import stackoverflow.answer.entity.Answer;
 import stackoverflow.answer.repository.AnswerRepository;
 import stackoverflow.exception.BusinessLogicException;
 import stackoverflow.exception.ExceptionCode;
-import stackoverflow.member.service.MemberService;
-import stackoverflow.question.service.QuestionService;
+import stackoverflow.member.entity.Member;
+import stackoverflow.member.repository.MemberRepository;
 
 
 import java.util.Optional;
@@ -19,16 +19,14 @@ import java.util.Optional;
 @Service
 @Transactional
 public class AnswerService {
-    private final MemberService memberService;
     private final AnswerRepository answerRepository;
-    private final QuestionService questionService;
+    private final MemberRepository memberRepository;
 
-
-    public AnswerService(MemberService memberService, AnswerRepository answerRepository, QuestionService questionService) {
-        this.memberService = memberService;
+    public AnswerService(AnswerRepository answerRepository, MemberRepository memberRepository) {
         this.answerRepository = answerRepository;
-        this.questionService = questionService;
+        this.memberRepository = memberRepository;
     }
+
 
     public Answer createAnswer(Answer answer) {
         //회원이 존재하는지 확인

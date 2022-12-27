@@ -37,12 +37,8 @@ public class MemberController {
     @PostMapping
     public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post requestBody) {
         Member member = mapper.memberPostDtoToMember(requestBody);
-
         Member createdMember = memberService.createMember(member);
-        /*URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, createdMember.getMemberId());
 
-        return ResponseEntity.created(location).build();
-    }*/
         return new ResponseEntity<>(
                 new SingleResponseDto<>(mapper.memberToMemberResponseDto(createdMember)),
                 HttpStatus.CREATED);
