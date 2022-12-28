@@ -17,13 +17,13 @@ import java.util.Optional;
 
 @Service
 public class QuestionService {
-    private final MemberService memberService;
+//    private final MemberService memberService;
     private final QuestionRepository questionRepository;
     private final MemberRepository memberRepository;
-
-    public QuestionService(MemberService memberService, QuestionRepository questionRepository,
+    
+    public QuestionService(QuestionRepository questionRepository,
                            MemberRepository memberRepository) {
-        this.memberService = memberService;
+
         this.questionRepository = questionRepository;
         this.memberRepository = memberRepository;
     }

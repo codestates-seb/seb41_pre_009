@@ -22,7 +22,7 @@ public class CommentDto {
 
         @Positive
         private long answerId;
-      
+
         @NotSpace(message = "내용을 채워주세요.")
         @Size(min=15, max = 100, message = "내용은 최소 15글자, 최대 100글자를 작성해야 합니다.")
         private String text;
@@ -33,11 +33,11 @@ public class CommentDto {
     @AllArgsConstructor
     public static class Patch {
         private long commentId;
-      
+
         @NotSpace(message = "내용을 채워주세요.")
         @Size(min=15, max = 100, message = "내용은 최소 15글자, 최대 100글자를 작성해야 합니다.")
         private String text;
-      
+
         public void setCommentId(long commentId) {
             this.commentId = commentId;
         }
