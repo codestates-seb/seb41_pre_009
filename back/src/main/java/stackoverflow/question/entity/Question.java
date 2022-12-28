@@ -1,5 +1,6 @@
 package stackoverflow.question.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,6 +16,7 @@ import java.util.List;
 
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -22,6 +24,10 @@ public class Question extends Auditable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long questionId;
+
+    @Column(nullable = false, name="question_writer_id")
+    private long questionWriterId;
+
 
     @Column(nullable = false)
     @Size(min = 15, max = 150)
@@ -34,8 +40,6 @@ public class Question extends Auditable{
     @Column
     private int view = 0;
 
-    @Column
-    private int questionVoteCount = 0;
 
 
     @Enumerated(value = EnumType.STRING)
@@ -56,17 +60,6 @@ public class Question extends Auditable{
             this.member.getQuestions().add(this);
         }
     }
-
-
-    @OneToMany(mappedBy = "question")
-    List<Answer> answers = new ArrayList<>();
-
-
-    @ManyToOne
-    @JoinColumn(name = "MEMBER_ID")
-    private Member member;
-
-
 
     public Question(String title, String content, Integer view) {
         this.title = title;

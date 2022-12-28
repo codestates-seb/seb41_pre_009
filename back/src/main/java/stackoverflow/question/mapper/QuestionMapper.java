@@ -10,20 +10,23 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface QuestionMapper {
-    default Question questionPostDtoToQuestion(QuestionDto.Post requestBody) {
+/*    default
+    Question questionPostDtoToQuestion(QuestionDto.Post requestBody)
+    {
         Question question = new Question();
         Member member = new Member();
-        member.setMemberId(requestBody.getMemberId());
 
         question.setMember(member);
         question.setTitle(requestBody.getTitle());
         question.setContent(requestBody.getContent());
         return question;
-    }
+    }*/
+
+    Question questionPostDtoToQuestion(QuestionDto.Post requestBody);
 
     Question questionPatchDtoToQuestion(QuestionDto.Patch requestBody);
 
-    @Mapping(source = "member.memberId", target = "memberId")
+    //@Mapping(source = "member.memberId", target = "memberId")
     QuestionDto.Response questionToQuestionResponseDto(Question question);
 
     List<QuestionDto.Response> questionsToQuestionResponseDtos(List<Question> questions);

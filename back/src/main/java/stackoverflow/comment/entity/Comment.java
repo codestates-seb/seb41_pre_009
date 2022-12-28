@@ -10,7 +10,6 @@ import stackoverflow.member.entity.Member;
 
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Getter

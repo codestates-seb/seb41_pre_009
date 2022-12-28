@@ -1,9 +1,14 @@
 package stackoverflow.question.service;
 
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import stackoverflow.exception.BusinessLogicException;
 import stackoverflow.exception.ExceptionCode;
+import stackoverflow.member.entity.Member;
+import stackoverflow.member.repository.MemberRepository;
 import stackoverflow.member.service.MemberService;
 import stackoverflow.question.entity.Question;
 import stackoverflow.question.repository.QuestionRepository;
@@ -14,18 +19,25 @@ import java.util.Optional;
 public class QuestionService {
     private final MemberService memberService;
     private final QuestionRepository questionRepository;
+    private final MemberRepository memberRepository;
 
-    public QuestionService(MemberService memberService, QuestionRepository questionRepository) {
+    public QuestionService(MemberService memberService, QuestionRepository questionRepository,
+                           MemberRepository memberRepository) {
         this.memberService = memberService;
         this.questionRepository = questionRepository;
+        this.memberRepository = memberRepository;
     }
 
     public Question createQuestion(Question question) {
-        //회원이 존재하는지 확인
-        memberService.findVerifiedMember(question.getMember().getMemberId());
+        return questionRepository.save(question);
+    }
+    public Question createQuestion(Question question, long questionWriterId) {
+        Member member = memberRepository.findByMemberId(questionWriterId);
+        question.setMember(member);
 
         return questionRepository.save(question);
     }
+
 
     public Question updateQuestion(Question question) {
         Question findQuestion = findVerifiedQuestion(question.getQuestionId());
@@ -46,10 +58,10 @@ public class QuestionService {
         return findQuestion;
     }
 
-    /*public Page<Question> findQuestions(int page, int size) {
+    public Page<Question> findQuestions(int page, int size) {
         return questionRepository.findAll(PageRequest.of(page, size,
                 Sort.by("questionId").descending()));
-    }*/
+    }
 
     public void deleteQuestion(long questionId) {
         Question findQuestion = findVerifiedQuestion(questionId);
