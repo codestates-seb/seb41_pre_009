@@ -9,7 +9,8 @@ import stackoverflow.comment.entity.Comment;
 
 import stackoverflow.member.entity.Member;
 import stackoverflow.question.entity.Question;
-
+import stackoverflow.vote.entity.AnswerVote;
+import stackoverflow.vote.entity.QuestionVote;
 
 
 import javax.persistence.*;
@@ -45,9 +46,11 @@ public class Answer extends Auditable {
     @JoinColumn(name = "QUESTION_ID")
     private Question question;
 
-
     @OneToMany(mappedBy = "answer")
     private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "answer") //cascade = {CascadeType.REMOVE}
+    private List<AnswerVote> votes = new ArrayList<>();
 
     //Answer와 연관관계를 맺을 대상인 member 객체
     public void setMember(Member member) {
@@ -64,11 +67,6 @@ public class Answer extends Auditable {
             this.question.getAnswers().add(this);
         }
     }
-
-    /*public Answer(Long answerVoteCount, String content) {
-        this.answerVoteCount = answerVoteCount;
-        this.content = content;
-    }*/
 
     public Answer(String content) {
         this.content = content;

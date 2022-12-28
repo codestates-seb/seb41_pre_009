@@ -25,7 +25,7 @@ public class AnswerDto {
     @Getter
     @AllArgsConstructor
     public static class Patch {
-        private long answerId;
+         private long answerId;
 
         @NotSpace(message = "내용을 채워주세요.")
         private String content;

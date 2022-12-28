@@ -8,6 +8,7 @@ import lombok.Setter;
 import stackoverflow.answer.entity.Answer;
 import stackoverflow.audit.Auditable;
 import stackoverflow.member.entity.Member;
+import stackoverflow.vote.entity.QuestionVote;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -28,7 +29,6 @@ public class Question extends Auditable{
     @Column(nullable = false, name="question_writer_id")
     private long questionWriterId;
 
-
     @Column(nullable = false)
     @Size(min = 15, max = 150)
     private String title;
@@ -40,8 +40,6 @@ public class Question extends Auditable{
     @Column
     private int view = 0;
 
-
-
     @Enumerated(value = EnumType.STRING)
     @Column(length = 20, nullable = false)
     private Question.QuestionStatus questionStatus = QuestionStatus.QUESTION_ACCEPTED;
@@ -52,6 +50,13 @@ public class Question extends Auditable{
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
+
+    @OneToMany(mappedBy = "question") //cascade = {CascadeType.REMOVE}
+    private List<QuestionVote> votes = new ArrayList<>();
+
+    public int getVoteCount() {
+        return this.votes.stream().mapToInt(QuestionVote::getAmount).sum();
+    }
 
 
     public void setMember(Member member) {
