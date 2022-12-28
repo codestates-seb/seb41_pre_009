@@ -2,6 +2,8 @@ package stackoverflow.question.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -10,14 +12,13 @@ import stackoverflow.member.service.MemberService;
 import stackoverflow.question.dto.QuestionDto;
 import stackoverflow.question.entity.Question;
 import stackoverflow.question.mapper.QuestionMapper;
+import stackoverflow.question.repository.QuestionRepository;
 import stackoverflow.question.service.QuestionService;
 import stackoverflow.response.MultiResponseDto;
 import stackoverflow.response.SingleResponseDto;
-import stackoverflow.utils.UriCreator;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -25,26 +26,28 @@ import java.util.List;
 @Validated
 @Slf4j
 public class QuestionController {
+    private final QuestionRepository questionRepository;
     private final static String QUESTION_DEFAULT_URL = "/questions";
     private final QuestionService questionService;
     private final QuestionMapper mapper;
     private final MemberService memberService;
 
-    public QuestionController(QuestionService questionService, QuestionMapper mapper, MemberService memberService) {
+    public QuestionController(QuestionService questionService, QuestionMapper mapper, MemberService memberService,
+                              QuestionRepository questionRepository) {
         this.questionService = questionService;
         this.mapper = mapper;
         this.memberService = memberService;
+        this.questionRepository = questionRepository;
     }
 
 
-    @PostMapping
+    @PostMapping("/ask")
     public ResponseEntity postQuestion(@RequestBody QuestionDto.Post requestBody) {
         Question question = mapper.questionPostDtoToQuestion(requestBody);
 
-        Question createdQuestion = questionService.createQuestion(question);
-        //URI location = UriCreator.createUri(QUESTION_DEFAULT_URL, createdQuestion.getQuestionId());
+        long questionWriterId = question.getQuestionWriterId();
+        Question createdQuestion = questionService.createQuestion(question,questionWriterId);
 
-        //return ResponseEntity.created(location).build();
         return new ResponseEntity<>(
                 new SingleResponseDto<>(mapper.questionToQuestionResponseDto(createdQuestion)),
                 HttpStatus.CREATED);
@@ -71,16 +74,16 @@ public class QuestionController {
                 , HttpStatus.OK);
     }
 
-    /*@GetMapping
+    @GetMapping
     public ResponseEntity getQuestions(@Positive @RequestParam int page,
-                                     @Positive @RequestParam int size) {
+                                       @Positive @RequestParam int size) {
         Page<Question> pageQuestions = questionService.findQuestions(page - 1, size);
         List<Question> questions = pageQuestions.getContent();
         return new ResponseEntity<>(
                 new MultiResponseDto<>(mapper.questionsToQuestionResponseDtos(questions),
                         pageQuestions),
                 HttpStatus.OK);
-    }*/
+    }
 
     @DeleteMapping("/{question-id}")
     public ResponseEntity deleteQuestion(
@@ -89,4 +92,6 @@ public class QuestionController {
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+
 }
