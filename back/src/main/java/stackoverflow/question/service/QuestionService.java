@@ -23,7 +23,6 @@ public class QuestionService {
 
     public QuestionService(QuestionRepository questionRepository,
                            MemberRepository memberRepository) {
-
         this.questionRepository = questionRepository;
         this.memberRepository = memberRepository;
     }

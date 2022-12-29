@@ -104,6 +104,8 @@ public class QuestionControllerTest {
     void patchQuestionTest() throws Exception {
         // given
         long questionId = 1L;
+      
+        List<Answer> answers = new ArrayList<>();
 
         List<Answer> answers = new ArrayList<>();
 

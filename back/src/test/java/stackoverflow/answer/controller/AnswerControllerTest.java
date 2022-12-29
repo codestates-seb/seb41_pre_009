@@ -50,14 +50,13 @@ class AnswerControllerTest {
     @MockBean
     private AnswerMapper mapper;
 
-    @Test
+    /*@Test
     void postAnswerTest() throws Exception {
         // given
         List<Comment> comments = new ArrayList<>();
         AnswerDto.Post post = new AnswerDto.Post(1L, 1L,"안녕하세요 답변 드리겠습니다. 이것은 예시입니다");
         AnswerDto.Response responseBody = new AnswerDto.Response(1L,1L,1L,
                 "안녕하세요 답변 드리겠습니다. 이것은 예시입니다",comments);
-
 
         // Stubbing by Mockito
         given(mapper.answerPostDtoToAnswer(Mockito.any(AnswerDto.Post.class))).willReturn(new Answer());
@@ -180,7 +179,7 @@ class AnswerControllerTest {
 
         // then
         actions.andExpect(status().isNoContent());
-    }
+    }*/
 
 }
 */
