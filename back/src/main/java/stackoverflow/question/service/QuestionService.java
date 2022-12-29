@@ -20,7 +20,7 @@ public class QuestionService {
 //    private final MemberService memberService;
     private final QuestionRepository questionRepository;
     private final MemberRepository memberRepository;
-    
+
     public QuestionService(QuestionRepository questionRepository,
                            MemberRepository memberRepository) {
 
