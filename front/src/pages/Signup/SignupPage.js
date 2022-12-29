@@ -5,80 +5,144 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import FacebookIcon from "@mui/icons-material/Facebook";
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
-// 회원가입 창
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
 const SignupPage = () => {
-  // 초기값
+  // 이름,이메일,비밀번호 보내기
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  // const [loading, setLoading] = useState(false);
 
-  // 오류메세지 상태 저장
-  const [nameMsg, setNameMsg] = useState("");
-  const [emailMsg, setEmailMsg] = useState("");
-  const [passwordMsg, setPasswordMsg] = useState("");
+  // 유효성검사
+  const [isValidName, setIsValidName] = useState(false);
+  const [isValidEmail, setIsValidEmail] = useState(false);
+  const [isValidPassword, setIsValidPassword] = useState(false);
 
-  // 유효성 검사
-  const [isName, setIsName] = useState(false);
-  const [isEmail, setIsEmail] = useState(false);
-  const [isPassword, setIsPassword] = useState(false);
+  // 회원가입 완료 시 로그인 페이지 이동
+  const navigate = useNavigate();
 
-  //password type 변경용 state
-  const [passwordType, setPasswordType] = useState({
-    type: "password",
-    visible: false,
-  });
-  //password type 변경용 함수 -> ***로 보이게끔 만들어준다.
-  const handlePasswordType = (e) => {
-    setPasswordType(() => {
-      if (!passwordType.visible) {
-        return { type: "text", visible: true };
-      }
-      return { type: "password", visible: false };
-    });
+  // 회원가입 데이터 전송
+  const signUpSubmit = () => {
+    axios
+      .post(
+        "https://stackoverflowclone-7b282-default-rtdb.firebaseio.com/members.json",
+        //data
+        {
+          name: name,
+          email: email,
+          password: password,
+        }
+      )
+      // 성공시 response
+      .then(() => {
+        alert("회원가입 성공!");
+        navigate("/loginpage");
+      })
+      // 오류발생시 실행
+      .catch((error) => {
+        alert("회원가입 실패!");
+        console.log(error);
+      });
   };
 
-  //이름
-  const onChangeName = (e) => {
-    const currentName = e.target.value;
-    setName(currentName);
+  // try {
+  //   const response = await axios
+  //     .post(
+  //       "https://stackoverflowclone-7b282-default-rtdb.firebaseio.com/members.json",
+  //       {
+  //         email,
+  //         name,
+  //         password,
+  //       }
+  //     )
+  //     .then(() => {
+  //       window.alert("회원가입이 완료되었습니다.");
+  //       navigate("/loginpage");
+  //     });
+  // } catch (error) {
+  //   window.alert("입력 사항을 확인해 주세요.");
+  // }
 
-    if (currentName.length < 2) {
-      setNameMsg("Name must be a minimum of 2 characters");
-      setIsName(false);
+  // const signUpSubmit = (email, name, password) => {
+  //   const data = { Email: email, Name: name, Password: password };
+  //   Post("https://stackoverflow-2ba22-default-rtdb.firebaseio.com.json", data);
+  //   navigate("/loginpage");
+  // };
+
+  // name 유효성 검사 - 1글자 이상 사용
+  const validationNameCheck = () => {
+    if (name.length >= 1) {
+      return true;
     } else {
-      setNameMsg(false);
-      setIsName(true);
+      return false;
     }
   };
-  //이메일 주소 유효성검사
-  const onChangeEmail = (e) => {
-    const currentEmail = e.target.value;
-    setEmail(currentEmail);
-    const emailRegExp =
+
+  // email 유효성 검사
+  const validationEmailCheck = () => {
+    const emailRegex =
+      // 이메일  정규표현식
       /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
+    return emailRegex.test(email);
+  };
 
-    if (!emailRegExp.test(currentEmail)) {
-      setEmailMsg("This is not a valid email address.");
-      setIsEmail(false);
+  // Password 유효성 검사 체크  특문1글자+한글1글자+글자수8자이상  -> 근데 왜 9자 해야만 되는지?
+  const validationPasswordCheck = () => {
+    const passwordRegex = /^(?=.*[a-zA-Z])((?=.*\d)(?=.*\W)).{8,16}$/;
+    return passwordRegex.test(password);
+  };
+
+  // 이름
+  const onNameHandler = (e) => {
+    //창 새로고침 방지
+    let targetValue = e.currentTarget.value;
+    setName(targetValue);
+    if (validationNameCheck(targetValue)) {
+      setIsValidName(false);
     } else {
-      setEmailMsg(false);
-      setIsEmail(true);
+      setIsValidName(true);
     }
   };
 
-  //패스워드 유효성검사 - 8글자이상
-  const onChangePassword = (e) => {
-    const currentPassword = e.target.value;
-    setPassword(currentPassword);
-
-    if (currentPassword.length >= 8) {
-      setPasswordMsg(false);
-      setIsPassword(true);
+  // 이메일
+  const onEmailHandler = (e) => {
+    let targetValue = e.currentTarget.value;
+    setEmail(targetValue);
+    if (validationEmailCheck(targetValue)) {
+      setIsValidEmail(false);
     } else {
-      setPasswordMsg(true);
-      setIsPassword(false);
+      setIsValidEmail(true);
+    }
+  };
+
+  // 패스워드
+  const onPasswordHandler = (e) => {
+    let targetValue = e.currentTarget.value;
+    setPassword(targetValue);
+    if (validationPasswordCheck(targetValue)) {
+      setIsValidPassword(false);
+    } else {
+      setIsValidPassword(true);
+    }
+  };
+
+  // 회원가입 기능 구현
+  const onSignupHandler = (e) => {
+    //창 새로고침 방지
+    e.preventDefault();
+    let validationName = validationNameCheck(name);
+    let validationEmail = validationEmailCheck(email);
+    let validationPassword = validationPasswordCheck(password);
+    if (validationName && validationEmail && validationPassword) {
+      signUpSubmit();
+    } else {
+      setIsValidName(!validationName);
+      setIsValidEmail(!validationEmail);
+      setIsValidPassword(!validationPassword);
     }
   };
 
@@ -128,49 +192,45 @@ const SignupPage = () => {
             <div className={styles.input}>
               <div>Display name </div>
               <input
-                id="name"
-                name="name"
+                // id="name"
+                // name="name"
                 value={name}
-                onChange={onChangeName}
+                onChange={onNameHandler}
               ></input>
-              {nameMsg}
-              {/* 2글자이상 5글자 이하일때 나오는 메세지 */}
-              {isName && (
+              {/* {nameMsg} */}
+              {/* 1글자면 나오는 메세지 */}
+              {isValidName && (
                 <div className={styles["isvalid-check"]}>
                   Please enter a valid Display name.
                 </div>
               )}
               <div>Email</div>
               <input
-                id="email"
-                name="email"
+                // id="email"
+                // name="email"
                 value={email}
-                onChange={onChangeEmail}
+                onChange={onEmailHandler}
               ></input>
-              {isEmail && (
+              {isValidEmail && (
                 <div className={styles["isvalid-check"]}>
                   Please enter a valid email address.
                 </div>
               )}
-              {emailMsg}
+              {/* {emailMsg} */}
               <div>Password</div>
               <input
-                id="password"
-                name="password"
+                // id="password"
+                // name="password"
                 value={password}
-                onChange={onChangePassword}
-                type={passwordType.type}
+                type="password"
+                onChange={onPasswordHandler}
               ></input>
-              {/* 비밀번호 암호화로 보여줌 **로 표시 */}
-              <span onClick={handlePasswordType}>
-                {passwordType.visible ? <span></span> : <span></span>}
-              </span>
-              {isPassword && (
+              {isValidPassword && (
                 <div className={styles["isvalid-check"]}>
                   Please enter a valid password.
                 </div>
               )}
-              {passwordMsg}
+              {/* {passwordMsg} */}
             </div>
             <div className={styles.isvalid}>
               Passwords must contain at least eight characters, including at
@@ -182,9 +242,9 @@ const SignupPage = () => {
               invitations, company announcements, and digests.
             </div>
             <div className={styles["signup-button"]}>
-              <Link to="/loginpage">
-                <button>Sign up</button>
-              </Link>
+              {/* <Link to="/loginpage"> */}
+              <button onClick={onSignupHandler}> Sign up</button>
+              {/* </Link> */}
             </div>
             <div className={styles["signup-policy"]}>
               By clicking “Sign up”, you agree to our terms of service, privacy
