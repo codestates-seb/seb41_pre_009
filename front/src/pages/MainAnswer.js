@@ -6,10 +6,9 @@ import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import HistoryIcon from "@mui/icons-material/History";
 
 // Answer 달린거 보여주는 칸
-const MainAnswer = () => {
+const MainAnswer = (props) => {
   return (
     <div className={styles.anwer}>
-      <h2> 1 Answer</h2>
       <div className={styles["mainanswer-bar"]}>
         <div className={styles["just-answer"]}>
           <div className={styles["all-answer-left"]}>
@@ -45,9 +44,8 @@ const MainAnswer = () => {
           </div>
           <div className={styles["post-mainanswer"]}>
             <div className={styles["post-mainanswer-body"]}>
-              넹 !!!! 화이팅 !
+              {props.data}
             </div>
-
             <div className={styles["post-mainanswer-author"]}>
               <div className={styles["author-left"]}>
                 <span> Share</span>

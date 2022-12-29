@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./MainQuestion.module.css";
-// import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import axios from "axios";
 import Sidebar from "../components/Sidebar";
 import MainAnswer from "./MainAnswer";
 import YourAnswer from "./YourAnswer";
@@ -10,16 +11,64 @@ import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import HistoryIcon from "@mui/icons-material/History";
 
 const MainQuestion = () => {
+
+  const [questionData, setQuestionData] = useState(null)
+
+  const params = useParams();
+
+  const [indexNum, setIndexNum] = useState(0);
+
+  const [data, setData] = useState([]);
+
+  const [answer, setAnswer] = useState([]);
+
+  useEffect(() => {
+    const getData = async () => {
+        const response = await axios.get("https://stackoverflow-6b095-default-rtdb.firebaseio.com/questions.json");
+        const refinedIndex = Object.keys(response.data);
+        const refinedAnswer = [];
+        setIndexNum(refinedIndex[params.id - 1]);
+        setData(response.data[refinedIndex[params.id - 1]]);
+        for (let i = 0; i < Object.keys(data.answers).length; i++) {
+          refinedAnswer.push(data.answers[Object.keys(data.answers)[i]])
+        }
+        setAnswer(refinedAnswer);
+        // console.log(response.data[Object.keys(response.data)[0]].title)
+    }
+    getData();
+  })
+
+  const handleAnswerSubmit = (body) => {
+    const data = { answer: body };
+    axios(`https://stackoverflow-6b095-default-rtdb.firebaseio.com/questions/${indexNum}/answers.json`, {
+      method: 'post',
+      headers: {
+        // Authorization: user.token,
+      },
+      data,
+    })
+      // .then((res) => {
+      //   const newAnswer = { ...res.data, voteCount: 0 };
+      //   setQuestionData({
+      //     ...questionData,
+      //     answers: [...questionData.answers, newAnswer],
+      //   });
+      // })
+      // .catch((error) => console.error(error));
+  };
+
+  // console.log(Object.values(data.answers))
+
   return (
     <div className={styles.question}>
       <Sidebar />
       <div className={styles.content}>
         <div className={styles["main-inner"]}>
           <div className={styles["mainquestion-header"]}>
-            <h2>question title 질문 저희조 잘 할 수 있을까요?</h2>
-            {/* <Link to="/QuestionPage"> */}
-            <button>Ask Question</button>
-            {/* </Link> */}
+            <h2>{data.title}</h2>
+            <Link to="/askquestionpage">
+              <button>Ask Question</button>
+            </Link>
           </div>
           <div className={styles["main-desc"]}>
             <div className={styles.info}>
@@ -66,8 +115,7 @@ const MainQuestion = () => {
 
               <div className={styles["post-mainqeustion"]}>
                 <div className={styles["post-mainqeustion-body"]}>
-                  저희 가보자9조는 화목합니다!!!!! 다들 너무 좋아욥!!저만 잘하면
-                  되는데 저 잘할 수 있을까요?
+                  {data.body}
                 </div>
                 <span className={styles.tags}>react</span>
                 <span className={styles.tags}>css</span>
@@ -101,8 +149,13 @@ const MainQuestion = () => {
               </div>
             </div>
           </div>
-          <MainAnswer />
-          <YourAnswer />
+          <h2>{answer.length} ANSWERS</h2>
+          {answer.map(el => {
+            return (
+              <MainAnswer data={el.answer} />
+            )
+          })}
+          <YourAnswer handleAnswerSubmit={handleAnswerSubmit} />
         </div>
       </div>
     </div>

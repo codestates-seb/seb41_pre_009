@@ -163,7 +163,6 @@ const LoginPage = () => {
           <div>Email</div>
           <input type="email" onChange={emailInputValueHandler}></input>
           {email.length > 0 && <div>{emailErrorMessage}</div>}
-
           <div>PassWord</div>
           {/* type="password" 이면 *처럼나옴 */}
           <input type="password" onChange={passwordInputValueHandler}></input>
