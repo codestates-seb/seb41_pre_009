@@ -5,10 +5,9 @@ import stackoverflow.answer.entity.Answer;
 import stackoverflow.answer.service.AnswerService;
 import stackoverflow.member.entity.Member;
 import stackoverflow.member.service.MemberService;
-import stackoverflow.question.entity.Question;
 import stackoverflow.vote.dto.VoteDto;
 import stackoverflow.vote.entity.AnswerVote;
-import stackoverflow.vote.entity.QuestionVote;
+
 import stackoverflow.vote.repository.AnswerVoteRepository;
 
 import java.util.List;

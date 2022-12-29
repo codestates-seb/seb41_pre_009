@@ -12,7 +12,6 @@ spring:
     properties:
       hibernate:
         format_sql: true
-
 logging:
   level:
     org:
@@ -23,3 +22,7 @@ server:
   servlet:
     encoding:
       force-response: true
+jwt:
+  key: ${JWT_SECRET_KEY}
+  access-token-expiration-minutes: 30
+  refresh-token-expiration-minutes: 420

@@ -4,7 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import stackoverflow.member.entity.Member;
 import stackoverflow.question.entity.Question;
 import stackoverflow.vote.entity.QuestionVote;
-import stackoverflow.vote.service.QuestionVoteService;
 
 import java.util.List;
 

@@ -1,3 +1,4 @@
+/*
 package stackoverflow.answer.controller;
 
 
@@ -57,8 +58,6 @@ class AnswerControllerTest {
         AnswerDto.Response responseBody = new AnswerDto.Response(1L,1L,1L,
                 "안녕하세요 답변 드리겠습니다. 이것은 예시입니다",comments);
 
-
-
         // Stubbing by Mockito
         given(mapper.answerPostDtoToAnswer(Mockito.any(AnswerDto.Post.class))).willReturn(new Answer());
 
@@ -87,19 +86,19 @@ class AnswerControllerTest {
                 .andReturn();
     }
 
-@Test
+    @Test
     void patchAnswerTest() throws Exception {
         // given
         long answerId = 1L;
 
         List<Comment> comments = new ArrayList<>();
         AnswerDto.Patch patch = new AnswerDto.Patch(1L,
-            "이것은 수정 내용입니다. 이것은 예시입니다.");
+                "이것은 수정 내용입니다. 이것은 예시입니다.");
 
         AnswerDto.Response response = new AnswerDto.Response(1L,
-            1L,
-            1L,
-            "이것은 수정 내용입니다. 이것은 예시입니다.",
+                1L,
+                1L,
+                "이것은 수정 내용입니다. 이것은 예시입니다.",
                 comments);
 
 
@@ -162,7 +161,7 @@ class AnswerControllerTest {
         // then
         actions.andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.content").value(answer.getContent()));
-                //.andExpect(jsonPath("$.data.answerVoteCount").value(answer.getAnswerVoteCount()));
+        //.andExpect(jsonPath("$.data.answerVoteCount").value(answer.getAnswerVoteCount()));
     }
 
 
@@ -183,3 +182,4 @@ class AnswerControllerTest {
     }*/
 
 }
+*/
