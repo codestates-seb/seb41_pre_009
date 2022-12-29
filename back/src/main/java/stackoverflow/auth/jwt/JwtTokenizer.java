@@ -19,7 +19,7 @@ import java.util.Map;
 @Component
 public class JwtTokenizer {
     @Getter
-    @Value("${jwt.key.secret}")
+    @Value("${jwt.key}")
     private String secretKey;
 
     @Getter
@@ -79,6 +79,7 @@ public class JwtTokenizer {
                 .parseClaimsJws(jws);
     }
 
+
     public Date getTokenExpiration(int expirationMinutes) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MINUTE, expirationMinutes);
@@ -92,20 +93,5 @@ public class JwtTokenizer {
         Key key = Keys.hmacShaKeyFor(keyBytes);
 
         return key;
-    }
-
-    private Claims parseToken(String token) {
-        Key key = getKeyFromBase64EncodedKey(encodeBase64SecretKey(this.secretKey));
-        String jws = token.replace("Bearer ", "");
-
-        return Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(jws)
-                .getBody();
-    }
-
-    public Long getMemberId(String token) {
-        return parseToken(token).get("memberId", Long.class);
     }
 }
