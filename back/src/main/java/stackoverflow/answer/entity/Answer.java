@@ -13,6 +13,8 @@ import stackoverflow.vote.entity.AnswerVote;
 import stackoverflow.vote.entity.QuestionVote;
 
 
+
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;

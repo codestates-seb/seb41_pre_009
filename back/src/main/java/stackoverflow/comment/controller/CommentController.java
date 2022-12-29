@@ -44,7 +44,7 @@ public class CommentController {
 
     @PatchMapping("/{comment-id}")
     public ResponseEntity patchComment(@PathVariable("comment-id") @Positive long commentId,
-                                      @Valid @RequestBody CommentDto.Patch requestBody) {
+                                       @Valid @RequestBody CommentDto.Patch requestBody) {
         requestBody.setCommentId(commentId);
 
         Comment comment = commentService.updateComment(mapper.commentPatchDtoToComment(requestBody));
@@ -65,7 +65,7 @@ public class CommentController {
 
     @GetMapping
     public ResponseEntity getComments(@Positive @RequestParam int page,
-                                     @Positive @RequestParam int size) {
+                                      @Positive @RequestParam int size) {
         Page<Comment> pageComments = commentService.findComments(page - 1, size);
         List<Comment> comments = pageComments.getContent();
 

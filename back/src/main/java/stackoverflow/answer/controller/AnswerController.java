@@ -48,7 +48,7 @@ public class AnswerController {
 
         Answer createdAnswer = answerService.createAnswer(answer,answerWriterId);
 
-       return new ResponseEntity<>(
+        return new ResponseEntity<>(
                 new SingleResponseDto<>(mapper.answerToAnswerResponseDto(createdAnswer))
                 , HttpStatus.CREATED);
     }

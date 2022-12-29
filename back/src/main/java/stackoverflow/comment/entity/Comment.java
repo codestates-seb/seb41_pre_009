@@ -10,7 +10,6 @@ import stackoverflow.member.entity.Member;
 
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Getter
@@ -21,6 +20,7 @@ public class Comment extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentId;
 
+
     @Column(length = 500, nullable = false)
     private String text;
 
@@ -28,9 +28,24 @@ public class Comment extends Auditable {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
+
     @ManyToOne
     @JoinColumn(name = "ANSWER_ID")
     private Answer answer;
+
+    public void setMember(Member member) {
+        this.member = member;
+        if (!this.member.getComments().contains(this)) {
+            this.member.getComments().add(this);
+        }
+    }
+
+    public void setAnswer(Answer answer) {
+        this.answer = answer;
+        if (!this.answer.getComments().contains(this)) {
+            this.answer.getComments().add(this);
+        }
+    }
 
     public Comment(String text) {
         this.text = text;

@@ -4,7 +4,6 @@ import lombok.*;
 import org.hibernate.validator.constraints.Range;
 import stackoverflow.answer.entity.Answer;
 import stackoverflow.member.entity.Member;
-import stackoverflow.question.entity.Question;
 
 import javax.persistence.*;
 

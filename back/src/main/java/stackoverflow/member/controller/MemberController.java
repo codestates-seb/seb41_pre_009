@@ -45,7 +45,7 @@ public class MemberController {
     }
 
 
-        @PatchMapping("/{member-id}")
+    @PatchMapping("/{member-id}")
     public ResponseEntity patchMember(
             @PathVariable("member-id") @Positive long memberId,
             @Valid @RequestBody MemberDto.Patch requestBody) {
@@ -70,7 +70,8 @@ public class MemberController {
 
     @GetMapping
     public ResponseEntity getMembers(@Positive @RequestParam int page,
-                                       @Positive @RequestParam int size) {
+                                     @Positive @RequestParam int size) {
+
         Page<Member> pageMembers = memberService.findMembers(page - 1, size);
         List<Member> members = pageMembers.getContent();
         return new ResponseEntity<>(
