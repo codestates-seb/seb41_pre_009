@@ -1,9 +1,18 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 import { Avatar } from "@mui/material";
 import styles from "./Question.module.css";
 
-const Question = () => {
+const Question = (props) => {
+
+  const navigate = useNavigate();
+
+  const mainQuestionView = (index) => {
+    navigate(`/mainquestion/${index}`);
+  }
+
   return (
     <div className={styles.question}>
       <div className={styles["question-container"]}>
@@ -22,11 +31,9 @@ const Question = () => {
         </div>
         <div className={styles.answer}>
           <h3 className={styles["qeustion-title"]}>
-            <Link to="/mainquestion">
-              <p>question title 질문 저희 조 잘 할 수 있을까요?</p>
-            </Link>
+            <div onClick={() => mainQuestionView(props.index + 1)}>{props.title}</div>
             <div className={styles["answer-title"]}>
-              This is answer 네 그럼요!!!!!가보자9
+              {props.body}
             </div>
             <span className={styles.tags}>react</span>
             <span className={styles.tags}>css</span>

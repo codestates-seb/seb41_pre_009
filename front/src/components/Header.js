@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import { authActions } from "../redux/auth";
+import { searchActions } from "../redux/search";
 
 import styles from "./Header.module.css";
 import { Avatar } from "@mui/material";
@@ -26,6 +27,18 @@ function Header() {
     dispatch(authActions.logout());
   };
 
+  const [searchVal, setSearchVal] = useState("");
+
+  // 입력창이 변경 될 때 마다 searchVal에 그 값 할당
+  const onChangeSearchValue = (event) => {
+    setSearchVal(event.target.value);
+  }
+
+  const onFilterSearch = (event) => {
+    event.preventDefault();
+    dispatch(searchActions.search(searchVal));
+  }
+
   return (
     <div className={styles.header}>
       <div className={styles["header-left"]}>
@@ -40,10 +53,10 @@ function Header() {
           <h3>Products</h3>
         </div>
         <div className={styles["header-middle"]}>
-          <div className={styles["header-search-container"]}>
+          <form className={styles["header-search-container"]} onSubmit={onFilterSearch} >
             <SearchIcon />
-            <input type="text" placeholder=" Searh..." />
-          </div>
+            <input type="text" placeholder=" Search..." onChange={onChangeSearchValue} value={searchVal} />
+          </form>
         </div>
         <div className={styles["header-right"]}>
           <div className={styles["header-right-container"]}>

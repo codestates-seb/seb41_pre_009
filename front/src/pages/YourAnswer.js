@@ -4,8 +4,10 @@ import MDEditor from "@uiw/react-md-editor";
 import styles from "./YourAnswer.module.css";
 
 //MainQuestion - Your Answer 부분 마크다운
-const YourAnswer = () => {
+const YourAnswer = (props) => {
+
   const [value, setValue] = React.useState("");
+
   return (
     <div className={styles["YourAnswer-container"]}>
       {/* <MDEditor value={value} onChange={setValue} />
@@ -18,13 +20,13 @@ const YourAnswer = () => {
           style={{ padding: 15 }}
           source={value}
           linkTarget="_blank"
-          // previewOptions={{
-          //   linkTarget: "_blank"
-          // }}
+        // previewOptions={{
+        //   linkTarget: "_blank"
+        // }}
         />
       </div>
       <div className={styles["YourAnswer-button"]}>
-        <button>Post Your Answer</button>
+        <button onClick={() => props.handleAnswerSubmit(value)}>Post Your Answer</button>
       </div>
     </div>
   );
