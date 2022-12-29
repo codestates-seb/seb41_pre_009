@@ -9,19 +9,17 @@ import styles from "./Header.module.css";
 import { Avatar } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import InboxIcon from "@mui/icons-material/Inbox";
-import HelpIcon from "@mui/icons-material/Help";
-import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
-import AcUnitIcon from "@mui/icons-material/AcUnit";
+// import HelpIcon from "@mui/icons-material/Help";
+// import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
+// import AcUnitIcon from "@mui/icons-material/AcUnit";
 import TableRowsIcon from "@mui/icons-material/TableRows";
-
 
 // import "./App.css";
 
 function Header() {
-
   const dispatch = useDispatch();
 
-  const isAuth = useSelector(state => state.auth.isAuthenticated);
+  const isAuth = useSelector((state) => state.auth.isAuthenticated);
 
   const logoutHandler = () => {
     dispatch(authActions.logout());
@@ -64,16 +62,16 @@ function Header() {
               <div>
                 <Avatar />
                 <InboxIcon />
-                <EmojiEventsIcon />
+                {/* <EmojiEventsIcon />
                 <HelpIcon />
-                <AcUnitIcon />
+                <AcUnitIcon /> */}
                 <TableRowsIcon />
                 <button onClick={logoutHandler}>로그아웃</button>
               </div>
             )}
             {!isAuth && (
               <div>
-                <Link to="/loginpage" >로그인</Link>
+                <Link to="/loginpage">로그인</Link>
                 <Link to="/signuppage">회원가입</Link>
               </div>
             )}

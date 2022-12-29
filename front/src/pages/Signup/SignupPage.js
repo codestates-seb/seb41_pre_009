@@ -29,13 +29,12 @@ const SignupPage = () => {
   const signUpSubmit = () => {
     axios
       .post(
-        // "https://stackoverflowclone-7b282-default-rtdb.firebaseio.com/members.json",
-        "https://5623-61-252-125-198.jp.ngrok.io/members",
+        "https://stackoverflowclone-7b282-default-rtdb.firebaseio.com/members.json",
         //data
         {
-          name,
-          email,
-          password,
+          name: name,
+          email: email,
+          password: password,
         }
       )
       // 성공시 response
