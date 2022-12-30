@@ -1,59 +1,131 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 800px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 800px;
 }
 
 .container > button {
-    width: 400px;
-    margin: 10px;
+  width: 400px;
+  margin: 10px;
 }
 
 form {
-    width: 400px;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-top: 5px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    box-shadow: 1px 1px rgb(201, 201, 201);
+  width: 400px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  box-shadow: 1px 1px rgb(201, 201, 201);
 }
 
 form > input {
-    width: 90%;
-    margin-left: 15px;
-    margin-bottom: 10px;
+  width: 90%;
+  margin-left: 15px;
+  margin-bottom: 10px;
 }
 
 form > div {
-    margin-left: 15px;
-    margin-bottom: 10px;
-    font-weight: 600;
+  margin-left: 15px;
+  margin-bottom: 10px;
+  font-weight: 600;
 }
 
 form > button {
-    width: 92.2%;
-    margin-left: 15px;
+  width: 92.2%;
+  margin-left: 15px;
+}
+
+.socialbox {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 288px;
+  margin: 24px 0px 16px;
 }
 
 .withGoogle {
-    background-color: #fff;
-    color: #000;
-    border-color: rgba(0, 0, 0, 0.4);
+  /* background-color: #fff;
+      color: #000;
+      border-color: rgba(0, 0, 0, 0.4); */
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  background-color: rgb(255, 255, 255);
+  padding: 10px;
+  margin: 4px 0px;
+  border: 1px solid hsl(210, 8%, 85%);
+  border-radius: 5px;
+  font-size: 13px;
+  color: hsl(210, 8%, 25%);
+  outline: none;
 }
 
 .withGitHub {
+  /* background-color: #000;
+      color: #fff;
+      border-color: rgba(0, 0, 0, 0.4); */
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  background-color: hsl(210, 8%, 20%);
+  padding: 10px;
+  margin: 4px 0px;
+  border: 1px solid hsl(210, 8%, 85%);
+  border-radius: 5px;
+  font-size: 13px;
+  color: rgb(255, 255, 255);
+  outline: none;
+}
+.withGitHub > svg {
+  width: 22px;
+  margin-right: 3px;
+}
+.withFaceBook {
+  /* background-color: rgb(5, 24, 129);
+      color: #fff;
+      border-color: rgba(0, 0, 0, 0.4); */
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  background-color: rgb(56, 84, 153);
+  padding: 10px;
+  margin: 4px 0px;
+  border: 1px solid var(--black-100);
+  border-radius: 5px;
+  font-size: 13px;
+  color: rgb(255, 255, 255);
+  outline: none;
+}
+.withFaceBook > svg {
+  width: 22px;
+  margin-right: 3px;
+}
+
+/* .withGoogle {
+    background-color: #fff;
+    color: #000;
+    border-color: rgba(0, 0, 0, 0.4);
+  }
+  
+  .withGitHub {
     background-color: #000;
     color: #fff;
     border-color: rgba(0, 0, 0, 0.4);
-}
-
-.withGoogle {
+  }
+  
+  .withGoogle {
     background-color: rgb(5, 24, 129);
     color: #fff;
     border-color: rgba(0, 0, 0, 0.4);
-}
+  } */

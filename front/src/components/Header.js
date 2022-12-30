@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import { authActions } from "../redux/auth";
-import { searchActions } from "../redux/search";
+import { loginAction } from "../redux/actions";
+// import { searchActions } from "../redux/searchSlice";
 
 import styles from "./Header.module.css";
 import { Avatar } from "@mui/material";
@@ -19,10 +19,10 @@ import TableRowsIcon from "@mui/icons-material/TableRows";
 function Header() {
   const dispatch = useDispatch();
 
-  const isAuth = useSelector((state) => state.auth.isAuthenticated);
+  const { user } = useSelector((state) => state.loginReducer);
 
   const logoutHandler = () => {
-    dispatch(authActions.logout());
+    dispatch(loginAction.logout());
   };
 
   const [searchVal, setSearchVal] = useState("");
@@ -30,12 +30,12 @@ function Header() {
   // 입력창이 변경 될 때 마다 searchVal에 그 값 할당
   const onChangeSearchValue = (event) => {
     setSearchVal(event.target.value);
-  }
+  };
 
   const onFilterSearch = (event) => {
     event.preventDefault();
-    dispatch(searchActions.search(searchVal));
-  }
+    // dispatch(searchActions.search(searchVal));
+  };
 
   return (
     <div className={styles.header}>
@@ -51,14 +51,22 @@ function Header() {
           <h3>Products</h3>
         </div>
         <div className={styles["header-middle"]}>
-          <form className={styles["header-search-container"]} onSubmit={onFilterSearch} >
+          <form
+            className={styles["header-search-container"]}
+            onSubmit={onFilterSearch}
+          >
             <SearchIcon />
-            <input type="text" placeholder=" Search..." onChange={onChangeSearchValue} value={searchVal} />
+            <input
+              type="text"
+              placeholder=" Search..."
+              onChange={onChangeSearchValue}
+              value={searchVal}
+            />
           </form>
         </div>
         <div className={styles["header-right"]}>
           <div className={styles["header-right-container"]}>
-            {isAuth && (
+            {user && (
               <div>
                 <Avatar />
                 <InboxIcon />
@@ -69,7 +77,7 @@ function Header() {
                 <button onClick={logoutHandler}>로그아웃</button>
               </div>
             )}
-            {!isAuth && (
+            {!user && (
               <div>
                 <Link to="/loginpage">로그인</Link>
                 <Link to="/signuppage">회원가입</Link>

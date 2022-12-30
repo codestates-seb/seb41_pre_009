@@ -29,12 +29,16 @@ const SignupPage = () => {
   const signUpSubmit = () => {
     axios
       .post(
-        "https://stackoverflowclone-7b282-default-rtdb.firebaseio.com/members.json",
-        //data
+        // "https://stackoverflowclone-7b282-default-rtdb.firebaseio.com/members",
+        // "https://b647-61-252-125-198.jp.ngrok.io/members",
+        // "https://2a4a-61-252-125-198.jp.ngrok.io/members",
+        "https://463b-61-252-125-198.jp.ngrok.io/members",
+
+        //data담아주기
         {
-          name: name,
-          email: email,
-          password: password,
+          name,
+          email,
+          password,
         }
       )
       // 성공시 response
@@ -85,7 +89,7 @@ const SignupPage = () => {
   // email 유효성 검사
   const validationEmailCheck = () => {
     const emailRegex =
-      // 이메일  정규표현식
+      // 이메일 형식 정규표현식
       /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
     return emailRegex.test(email);
   };
