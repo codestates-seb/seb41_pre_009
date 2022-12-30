@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import stackoverflow.auth.util.CustomAuthorityUtils;
 import stackoverflow.exception.BusinessLogicException;
 import stackoverflow.exception.ExceptionCode;
+import stackoverflow.helper.event.MemberRegistrationApplicationEvent;
 import stackoverflow.member.entity.Member;
 import stackoverflow.member.repository.MemberRepository;
 
@@ -25,7 +26,6 @@ import java.util.stream.Collectors;
 public class MemberService {
     private final MemberRepository memberRepository;
     //private final ApplicationEventPublisher publisher;
-
     private final PasswordEncoder passwordEncoder;
     private final CustomAuthorityUtils authorityUtils;
 
@@ -34,7 +34,6 @@ public class MemberService {
         this.passwordEncoder = passwordEncoder;
         this.authorityUtils = authorityUtils;
     }
-
     public Member createMember(Member member) {
         // 이미 등록된 이메일인지 확인
         verifyExistsEmail(member.getEmail());
