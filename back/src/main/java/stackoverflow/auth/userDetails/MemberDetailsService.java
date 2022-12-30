@@ -1,6 +1,7 @@
 package stackoverflow.auth.userDetails;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -43,6 +44,7 @@ public class MemberDetailsService implements UserDetailsService {
         }
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
+            // DB에 저장된 Role 정보로 User 권한 목록 생성
             return authorityUtils.createAuthorities(this.getRoles());
         }
 

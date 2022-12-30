@@ -35,10 +35,14 @@ public class Member extends Auditable {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
+    // 권한 지정을 위한 enum 타입
+    @Enumerated(value = EnumType.STRING)
+    @Column(length = 20, nullable = false)
+    private MemberRole memberRole = MemberRole.ROLE_USER;
+
     @Enumerated(value = EnumType.STRING)
     @Column(length = 20, nullable = false)
     private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
-
 
     @OneToMany(mappedBy = "member")
     List<Question> questions = new ArrayList<>();
@@ -62,6 +66,10 @@ public class Member extends Auditable {
         }
     }
 
+    public enum MemberRole {
+        ROLE_USER,
+        ROLE_ADMIN
+    }
 
     public enum MemberStatus {
         MEMBER_ACTIVE("활동중"),

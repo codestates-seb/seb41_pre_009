@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -30,7 +29,6 @@ import static org.springframework.http.HttpMethod.*;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
-@EnableWebSecurity(debug = true)
 public class SecurityConfiguration {
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
@@ -42,9 +40,29 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//        http
+//                .headers().frameOptions().sameOrigin()
+//                .and()
+//                .csrf().disable()
+//                .cors(withDefaults())
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+//                .formLogin().disable()
+//                .httpBasic().disable()
+//                .exceptionHandling()
+//                .authenticationEntryPoint(new MemberAuthenticationEntryPoint())  // 추가
+//                .accessDeniedHandler(new MemberAccessDeniedHandler())            // 추가
+//                .and()
+//                .apply(new CustomFilterConfigurer())
+//                .and()
+//                .authorizeHttpRequests(authorize -> authorize
+//                        .anyRequest().permitAll()
+//                );
+//        return http.build();
+//    }
+
+
         http
-                .headers().frameOptions().sameOrigin()
-                .and()
                 .csrf().disable()
                 .cors(withDefaults())
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -58,7 +76,6 @@ public class SecurityConfiguration {
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
-                        .antMatchers("/", "/error", "/webjars/**","/h2-console/**" ).permitAll()
                         .antMatchers(POST, "/auth/login").permitAll()
                         .antMatchers(POST, "/members").permitAll()
                         .antMatchers(GET, "/members/profile").hasRole("USER")
@@ -71,7 +88,7 @@ public class SecurityConfiguration {
                         .antMatchers(POST, "/questions/*/answers").hasRole("USER")
                         .antMatchers(DELETE, "/answers/*").hasRole("USER")
                         .antMatchers(PATCH, "/answers/*").hasRole("USER")
-                        .anyRequest().permitAll()
+                        .anyRequest().denyAll()
                 );
         return http.build();
     }
@@ -85,7 +102,10 @@ public class SecurityConfiguration {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "PUT", "DELETE", "HEAD"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PATCH", "DELETE"));
+        //configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "PUT", "DELETE", "HEAD"));
+        //configuration.setAllowedHeaders(Arrays.asList("*"));
+        //configuration.setExposedHeaders(Arrays.asList("*"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

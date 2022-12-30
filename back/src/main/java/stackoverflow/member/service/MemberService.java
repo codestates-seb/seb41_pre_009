@@ -4,6 +4,8 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import stackoverflow.auth.util.CustomAuthorityUtils;
@@ -14,30 +16,30 @@ import stackoverflow.member.entity.Member;
 import stackoverflow.member.repository.MemberRepository;
 
 import javax.transaction.Transactional;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 @Transactional
 @Service
 public class MemberService {
     private final MemberRepository memberRepository;
-    private final ApplicationEventPublisher publisher;
-
-    // 추가
+    //private final ApplicationEventPublisher publisher;
     private final PasswordEncoder passwordEncoder;
     private final CustomAuthorityUtils authorityUtils;
 
-    public MemberService(MemberRepository memberRepository,
-                         ApplicationEventPublisher publisher,
-                         PasswordEncoder passwordEncoder,
-                         CustomAuthorityUtils authorityUtils) {
+    public MemberService(MemberRepository memberRepository, PasswordEncoder passwordEncoder, CustomAuthorityUtils authorityUtils) {
         this.memberRepository = memberRepository;
-        this.publisher = publisher;
         this.passwordEncoder = passwordEncoder;
         this.authorityUtils = authorityUtils;
     }
     public Member createMember(Member member) {
         // 이미 등록된 이메일인지 확인
         verifyExistsEmail(member.getEmail());
+
+        // User 권한 지정
+        List<GrantedAuthority> authorities = createAuthorities(Member.MemberRole.ROLE_USER.name());
 
         // password 암호화
         String encryptedPassword = passwordEncoder.encode(member.getPassword());
@@ -49,9 +51,16 @@ public class MemberService {
 
         Member savedMember = memberRepository.save(member);
 
+        //publisher.publishEvent(new MemberRegistrationApplicationEvent(this, savedMember));
 
-        publisher.publishEvent(new MemberRegistrationApplicationEvent(savedMember));
         return savedMember;
+        //return memberRepository.save(member);
+    }
+
+    private List<GrantedAuthority> createAuthorities(String... roles) {
+        return Arrays.stream(roles)
+                .map(role -> new SimpleGrantedAuthority(role))
+                .collect(Collectors.toList());
     }
 
 

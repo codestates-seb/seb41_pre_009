@@ -5,13 +5,21 @@ spring:
       path: /h2
   datasource:
     url: jdbc:h2:mem:test
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/teststack?useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8&useSSL=true
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    username: root
+#    password: 1234
   jpa:
     hibernate:
-      ddl-auto: create
-    show-sql: true
+      ddl-auto: create 
+    show-sql: true     
     properties:
       hibernate:
-        format_sql: true
+        format_sql: true  
+  sql:
+    init:
+      data-locations: classpath*:db/h2/data.sql
 logging:
   level:
     org:
@@ -26,6 +34,6 @@ mail:
   address:
     admin: admin@gmail.com
 jwt:
-  key: 제블로그에오신여러분을환영합니다
-  access-token-expiration-minutes: 40
+  key: ${JWT_SECRET_KEY}
+  access-token-expiration-minutes: 30
   refresh-token-expiration-minutes: 420
