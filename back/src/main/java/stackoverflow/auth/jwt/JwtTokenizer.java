@@ -93,7 +93,7 @@ public class JwtTokenizer {
 
         return key;
     }
-    
+
     private Claims parseToken(String token) {
         Key key = getKeyFromBase64EncodedKey(encodeBase64SecretKey(this.secretKey));
         String jws = token.replace("Bearer ", "");
