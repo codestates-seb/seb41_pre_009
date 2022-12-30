@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -14,6 +15,8 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import stackoverflow.auth.filter.JwtAuthenticationFilter;
 import stackoverflow.auth.filter.JwtVerificationFilter;
+import stackoverflow.auth.handler.MemberAccessDeniedHandler;
+import stackoverflow.auth.handler.MemberAuthenticationEntryPoint;
 import stackoverflow.auth.handler.MemberAuthenticationFailureHandler;
 import stackoverflow.auth.handler.MemberAuthenticationSuccessHandler;
 import stackoverflow.auth.jwt.JwtTokenizer;
@@ -22,6 +25,7 @@ import stackoverflow.auth.util.CustomAuthorityUtils;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.springframework.http.HttpMethod.*;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
@@ -41,15 +45,22 @@ public class SecurityConfiguration {
                 .and()
                 .csrf().disable()
                 .cors(withDefaults())
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .formLogin().disable()
                 .httpBasic().disable()
-                .apply(new CustomFilterConfigurer())   // (1)
+                .exceptionHandling()
+                .authenticationEntryPoint(new MemberAuthenticationEntryPoint())  // 추가
+                .accessDeniedHandler(new MemberAccessDeniedHandler())            // 추가
+                .and()
+                .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
                         .anyRequest().permitAll()
                 );
         return http.build();
     }
+
 
 //        http
 //                .csrf().disable()
@@ -90,10 +101,11 @@ public class SecurityConfiguration {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "PUT", "DELETE", "HEAD"));
-        configuration.setAllowedHeaders(List.of("*"));
-        configuration.setExposedHeaders(List.of("*"));
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PATCH", "DELETE"));
+        //configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "PUT", "DELETE", "HEAD"));
+        //configuration.setAllowedHeaders(Arrays.asList("*"));
+        //configuration.setExposedHeaders(Arrays.asList("*"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
