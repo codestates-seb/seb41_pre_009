@@ -25,7 +25,6 @@ import java.util.List;
 @RequestMapping("/answers")
 @Validated
 public class AnswerController {
-    private final static String ANSWER_DEFAULT_URL = "/answers";
     private AnswerService answerService;
     private QuestionService questionService;
     private AnswerMapper mapper;

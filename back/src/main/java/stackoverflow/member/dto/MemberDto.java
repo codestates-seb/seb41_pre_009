@@ -33,7 +33,6 @@ public class MemberDto {
 
         @NotSpace(message = "회원 이름은 공백이 아니어야 합니다")
         private String name;
-        private String password;
 
         private Member.MemberStatus memberStatus;
 
@@ -49,7 +48,10 @@ public class MemberDto {
         private long memberId;
         private String email;
         private String name;
-        private String password;
         private Member.MemberStatus memberStatus;
+
+        public String getMemberStatus() {
+            return memberStatus.getStatus();
+        }
     }
 }
