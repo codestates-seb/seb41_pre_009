@@ -10,7 +10,6 @@ import stackoverflow.answer.dto.AnswerDto;
 import stackoverflow.answer.entity.Answer;
 import stackoverflow.answer.mapper.AnswerMapper;
 import stackoverflow.answer.service.AnswerService;
-import stackoverflow.member.service.MemberService;
 
 import stackoverflow.question.entity.Question;
 import stackoverflow.question.service.QuestionService;
@@ -35,7 +34,7 @@ public class AnswerController {
         this.mapper = mapper;
     }
 
-    @PostMapping("/reply/{question-id}")
+    @PostMapping("/{question-id}")
     public ResponseEntity postAnswer(@Valid @RequestBody AnswerDto.Post requestBody,
                                      @PathVariable("question-id") @Positive long questionId) {
         Answer answer = mapper.answerPostDtoToAnswer(requestBody);
@@ -64,8 +63,8 @@ public class AnswerController {
                 HttpStatus.OK);
     }
 
-    @GetMapping("/{answer-id}")
-    public ResponseEntity getAnswer(@PathVariable("answer-id") long answerId) {
+    @GetMapping("/{question-id}")
+    public ResponseEntity getAnswer(@PathVariable("question-id") long answerId) {
         Answer answer = answerService.findAnswer(answerId);
 
         return new ResponseEntity<>(

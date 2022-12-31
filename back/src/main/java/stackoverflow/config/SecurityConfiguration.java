@@ -61,8 +61,9 @@ public class SecurityConfiguration {
         return http.build();
     }
 
-
 //        http
+//                .headers().frameOptions().sameOrigin()
+//                .and()
 //                .csrf().disable()
 //                .cors(withDefaults())
 //                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -70,28 +71,48 @@ public class SecurityConfiguration {
 //                .formLogin().disable()
 //                .httpBasic().disable()
 //                .exceptionHandling()
-//                .authenticationEntryPoint(new MemberAuthenticationEntryPoint())
-//                .accessDeniedHandler(new MemberAccessDeniedHandler())
+//                .authenticationEntryPoint(new MemberAuthenticationEntryPoint())  // 추가
+//                .accessDeniedHandler(new MemberAccessDeniedHandler())            // 추가
 //                .and()
 //                .apply(new CustomFilterConfigurer())
 //                .and()
 //                .authorizeHttpRequests(authorize -> authorize
-//                        .antMatchers(POST, "/auth/login").permitAll()
-//                        .antMatchers(POST, "/members").permitAll()
-//                        .antMatchers(GET, "/members/profile").hasRole("MEMBER")
-//                        .antMatchers(GET, "/members/*").permitAll()
-//                        .antMatchers(POST, "/questions").hasRole("MEMBER")
-//                        .antMatchers(GET, "/questions").permitAll()
-//                        .antMatchers(PATCH, "/questions/").hasRole("MEMBER")
-//                        .antMatchers(PATCH, "/questions/*").hasRole("MEMBER")
-//                        .antMatchers(DELETE, "/questions/*").hasRole("MEMBER")
-//                        .antMatchers(POST, "/questions/*/answers").hasRole("MEMBER")
-//                        .antMatchers(DELETE, "/answers/*").hasRole("MEMBER")
-//                        .antMatchers(PATCH, "/answers/*").hasRole("MEMBER")
-//                        .anyRequest().denyAll()
+//                        .anyRequest().permitAll()
 //                );
 //        return http.build();
 //    }
+
+
+//         http
+//                 .csrf().disable()
+//                 .cors(withDefaults())
+//                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                 .and()
+//                 .formLogin().disable()
+//                 .httpBasic().disable()
+//                 .exceptionHandling()
+//                 .authenticationEntryPoint(new MemberAuthenticationEntryPoint())
+//                 .accessDeniedHandler(new MemberAccessDeniedHandler())
+//                 .and()
+//                 .apply(new CustomFilterConfigurer())
+//                 .and()
+//                 .authorizeHttpRequests(authorize -> authorize
+//                         .antMatchers(POST, "/auth/login").permitAll()
+//                         .antMatchers(POST, "/members").permitAll()
+//                         .antMatchers(GET, "/members/profile").hasRole("USER")
+//                         .antMatchers(GET, "/members/*").permitAll()
+//                         .antMatchers(POST, "/questions").hasRole("USER")
+//                         .antMatchers(GET, "/questions").permitAll()
+//                         .antMatchers(PATCH, "/questions/").hasRole("USER")
+//                         .antMatchers(PATCH, "/questions/*").hasRole("USER")
+//                         .antMatchers(DELETE, "/questions/*").hasRole("USER")
+//                         .antMatchers(POST, "/questions/*/answers").hasRole("USER")
+//                         .antMatchers(DELETE, "/answers/*").hasRole("USER")
+//                         .antMatchers(PATCH, "/answers/*").hasRole("USER")
+//                         .anyRequest().denyAll()
+//                 );
+//         return http.build();
+//     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -105,6 +126,7 @@ public class SecurityConfiguration {
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "PUT", "DELETE", "HEAD"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setExposedHeaders(Arrays.asList("*"));
+
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
