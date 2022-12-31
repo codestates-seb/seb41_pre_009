@@ -9,13 +9,6 @@ spring:
     hibernate:
       ddl-auto: create  # 스키마 자동 생성
     show-sql: true  # SQL 쿼리 출력
- 
-logging:
-  level:
-    org:
-      springframework:
-        orm:
-          jpa: DEBUG
 server:
   servlet:
     encoding:
@@ -24,6 +17,6 @@ mail:
   address:
     admin: admin@email.com
 jwt:
-  key: ${JWT_SECRET_KEY}
+  key: ${JWT_SECRET_KEY} # ${JWT_KEY}
   access-token-expiration-minutes: 30  # minutes
   refresh-token-expiration-minutes: 420
