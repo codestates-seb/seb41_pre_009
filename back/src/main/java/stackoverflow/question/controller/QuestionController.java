@@ -43,7 +43,7 @@ public class QuestionController {
     }
 
 
-    @PostMapping("/ask")
+    @PostMapping
     public ResponseEntity postQuestion(@RequestBody QuestionDto.Post requestBody) {
         Question question = mapper.questionPostDtoToQuestion(requestBody);
 

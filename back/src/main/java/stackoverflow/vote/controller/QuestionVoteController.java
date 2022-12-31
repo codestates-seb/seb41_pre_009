@@ -7,7 +7,7 @@ import stackoverflow.vote.dto.VoteDto;
 import stackoverflow.vote.service.QuestionVoteService;
 
 @RestController
-@RequestMapping("/questionvote")
+@RequestMapping("/questions")
 public class QuestionVoteController {
     private final QuestionVoteService questionVoteService;
 
@@ -15,18 +15,17 @@ public class QuestionVoteController {
         this.questionVoteService = questionVoteService;
     }
 
-    @PostMapping("/{question-id}/{question-voter-id}/upvotes")
+    @PostMapping("/{question-id}/upvote")
     @ResponseStatus(HttpStatus.CREATED)
     public VoteDto.QuestionResponse postQuestionUpVote(@PathVariable("question-id") long questionId,
-                                           @PathVariable("question-voter-id") long questionVoterId) {
+                                           @PathVariable("question-id") long questionVoterId) {
         return questionVoteService.saveQuestionVote(questionId, questionVoterId,1);
     }
 
-
-    @PostMapping("/{question-id}/{question-voter-id}/downvotes")
+    @PostMapping("/{question-id}/downvote")
     @ResponseStatus(HttpStatus.CREATED)
     public VoteDto.QuestionResponse postQuestionDownVote(@PathVariable("question-id") long questionId,
-                                           @PathVariable("question-voter-id") long questionVoterId) {
+                                           @PathVariable("question-id") long questionVoterId) {
         return questionVoteService.saveQuestionVote(questionId, questionVoterId,-1);
     }
 }
