@@ -6,18 +6,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import stackoverflow.auth.jwt.JwtTokenizer;
 import stackoverflow.member.dto.MemberDto;
 import stackoverflow.member.entity.Member;
 import stackoverflow.member.mapper.MemberMapper;
 import stackoverflow.member.service.MemberService;
-import stackoverflow.question.entity.Question;
 import stackoverflow.response.MultiResponseDto;
 import stackoverflow.response.SingleResponseDto;
-import stackoverflow.utils.UriCreator;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
-import java.net.URI;
 import java.util.List;
 
 
@@ -30,7 +28,7 @@ public class MemberController {
     private final MemberService memberService;
     private final MemberMapper mapper;
 
-    public MemberController(MemberService memberService, MemberMapper mapper) {
+    public MemberController(MemberService memberService, MemberMapper mapper, JwtTokenizer jwtTokenizer) {
         this.memberService = memberService;
         this.mapper = mapper;
     }

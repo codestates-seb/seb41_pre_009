@@ -6,22 +6,26 @@ spring:
 #  datasource:
 #    url: jdbc:h2:mem:test
   datasource:
-    url: jdbc:h2:mem:test
-#  datasource:
-#    url: jdbc:mysql://localhost:3306/teststack?useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8&useSSL=true
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    username: root
-#    password: 1234
+    url: jdbc:mysql://localhost:3306/teststack?useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8&useSSL=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 1234
+    #url: jdbc:h2:mem:test
   jpa:
     hibernate:
       ddl-auto: create 
     show-sql: true     
     properties:
       hibernate:
-        format_sql: true  
-  sql:
-    init:
-      data-locations: classpath*:db/h2/data.sql
+        format_sql: true
+        show_sql: true
+    database: mysql
+
+        #format_sql: true  
+#  sql:
+#    init:
+#      data-locations: classpath*:db/h2/data.sql
+
 logging:
   level:
     org:

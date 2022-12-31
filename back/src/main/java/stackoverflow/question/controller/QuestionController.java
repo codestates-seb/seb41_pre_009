@@ -15,6 +15,7 @@ import stackoverflow.question.mapper.QuestionMapper;
 import stackoverflow.question.repository.QuestionRepository;
 import stackoverflow.question.service.QuestionService;
 import stackoverflow.response.MultiResponseDto;
+import stackoverflow.response.MultiResponseDto2;
 import stackoverflow.response.SingleResponseDto;
 
 import javax.validation.Valid;
@@ -25,6 +26,7 @@ import java.util.List;
 @RequestMapping("/questions")
 @Validated
 @Slf4j
+@CrossOrigin
 public class QuestionController {
     private final QuestionRepository questionRepository;
     private final static String QUESTION_DEFAULT_URL = "/questions";
@@ -74,7 +76,7 @@ public class QuestionController {
                 , HttpStatus.OK);
     }
 
-    @GetMapping
+    /*@GetMapping
     public ResponseEntity getQuestions(@Positive @RequestParam int page,
                                        @Positive @RequestParam int size) {
         Page<Question> pageQuestions = questionService.findQuestions(page - 1, size);
@@ -82,6 +84,14 @@ public class QuestionController {
         return new ResponseEntity<>(
                 new MultiResponseDto<>(mapper.questionsToQuestionResponseDtos(questions),
                         pageQuestions),
+                HttpStatus.OK);
+    }*/
+
+    @GetMapping
+    public ResponseEntity getQuestions() {
+        List<Question> questions = questionService.findQuestions();
+        return new ResponseEntity<>(
+                new MultiResponseDto2<>(mapper.questionsToQuestionResponseDtos(questions)),
                 HttpStatus.OK);
     }
 

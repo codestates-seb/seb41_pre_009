@@ -13,6 +13,7 @@ import stackoverflow.member.service.MemberService;
 import stackoverflow.question.entity.Question;
 import stackoverflow.question.repository.QuestionRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -57,9 +58,13 @@ public class QuestionService {
         return findQuestion;
     }
 
-    public Page<Question> findQuestions(int page, int size) {
+    /*public Page<Question> findQuestions(int page, int size) {
         return questionRepository.findAll(PageRequest.of(page, size,
                 Sort.by("questionId").descending()));
+    }*/
+
+    public List<Question> findQuestions() {
+        return questionRepository.findAll();
     }
 
     public void deleteQuestion(long questionId) {
