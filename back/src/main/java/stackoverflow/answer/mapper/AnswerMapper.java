@@ -1,19 +1,22 @@
 package stackoverflow.answer.mapper;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import stackoverflow.answer.dto.AnswerDto;
 import stackoverflow.answer.entity.Answer;
+import stackoverflow.member.entity.Member;
+import stackoverflow.question.entity.Question;
+
+import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface AnswerMapper {
-
-    // Value Object를 사용
     Answer answerPostDtoToAnswer(AnswerDto.Post requestBody);
 
     Answer answerPatchDtoToAnswer(AnswerDto.Patch requestBody);
 
-    AnswerDto answerToAnswerResponseDto(Answer answer);
+    AnswerDto.Response answerToAnswerResponseDto(Answer answer);
 
-//    List<AnswerResponseDto> answersToAnswerResponseDtos(List<Answer> answer);
+    List<AnswerDto.Response> answersToAnswerResponseDtos(List<Answer> answer);
 
 }

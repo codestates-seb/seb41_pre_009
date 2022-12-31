@@ -1,35 +1,39 @@
 package stackoverflow.comment.service;
 
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import stackoverflow.answer.service.AnswerService;
 import stackoverflow.comment.entity.Comment;
 import stackoverflow.comment.repository.CommentRepository;
 import stackoverflow.exception.BusinessLogicException;
 import stackoverflow.exception.ExceptionCode;
+import stackoverflow.member.service.MemberService;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
 @Transactional
 public class CommentService {
-//    private final MemberService memberService;
+    private final MemberService memberService;
     private final CommentRepository commentRepository;
+    private final AnswerService answerService;
 
-    /*public commentService(MemberService memberService, commentRepository commentRepository) {
+    public CommentService(MemberService memberService, CommentRepository commentRepository, AnswerService answerService) {
         this.memberService = memberService;
         this.commentRepository = commentRepository;
-    }*/
-
-    public CommentService(CommentRepository commentRepository) {
-        this.commentRepository = commentRepository;
+        this.answerService = answerService;
     }
 
     public Comment createComment(Comment comment) {
         //회원이 존재하는지 확인
-//        memberService.findVerifiedMember(comment.getMember().getMemberId());
-//        createcomment.setCreateTime(LocalDateTime.now());
+        memberService.findVerifiedMember(comment.getMember().getMemberId());
+
+        //답변이 존재하는지 확인
+        answerService.findVerifiedAnswer(comment.getAnswer().getAnswerId());
 
         return commentRepository.save(comment);
     }
@@ -38,15 +42,9 @@ public class CommentService {
         // 조회하려는 답변이 검증된 답변인지 확인(존재하는 답변인지 확인 등)
         Comment findComment = findVerifiedComment(comment.getCommentId());
 
-       /* Optional.ofNullable(comment.getMember())
-                .ifPresent(member -> findcomment.setMember(member));
-        Optional.ofNullable(comment.getQuestion())
-                .ifPresent(questiond -> findcomment.setQuestion(questiond));*/
         Optional.ofNullable(comment.getText())
                 .ifPresent(text -> findComment.setText(text));
 
-        // 수정된 시간 적용
-       // findComment.setModifiedTime(LocalDateTime.now());
 
         return commentRepository.save(findComment);
     }
@@ -55,10 +53,10 @@ public class CommentService {
         return findVerifiedCommentByQuery(commentId);
     }
 
-   /* public Page<comment> findcomments(int page, int size) {
+    public Page<Comment> findComments(int page, int size) {
         return commentRepository.findAll(PageRequest.of(page, size,
                 Sort.by("commentId").descending()));
-    }*/
+    }
 
     public void deleteComment(long commentId) {
         Comment comment = findVerifiedComment(commentId);

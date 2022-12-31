@@ -3,6 +3,7 @@ package stackoverflow.audit;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -16,17 +17,21 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class Auditable {
 
-    @CreatedDate
+    @CreatedDate //데이터 생성 날짜 자동 저장 어노테이션
     @Column(name = "created_time", updatable = false)
     private LocalDateTime createdTime;
 
 
-    @LastModifiedDate
+    @LastModifiedDate // 데이터 수정 날짜 자동 저장 어노테이션
     @Column(name = "LAST_MODIFIED_TIME")
     private LocalDateTime modifiedTime;
 
 
-    @CreatedBy
+    @CreatedBy // 데이터 생성자 자동 저장 어노테이션
     @Column(updatable = false)
     private String createdBy;
+
+
+    @LastModifiedBy // 데이터 수정자 자동 저장 어노테이션
+    private String modifiedBy;
 }

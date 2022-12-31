@@ -1,20 +1,24 @@
 package stackoverflow.comment.controller;
 
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import stackoverflow.answer.entity.Answer;
 import stackoverflow.comment.dto.CommentDto;
 import stackoverflow.comment.entity.Comment;
 import stackoverflow.comment.mapper.CommentMapper;
 import stackoverflow.comment.service.CommentService;
+import stackoverflow.response.MultiResponseDto;
 import stackoverflow.response.SingleResponseDto;
 import stackoverflow.utils.UriCreator;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/comments")
@@ -33,14 +37,14 @@ public class CommentController {
     public ResponseEntity postComment(@Valid @RequestBody CommentDto.Post requestBody) {
         Comment comment = commentService.createComment(mapper.commentPostDtoToComment(requestBody));
 
-        URI location = UriCreator.createUri(COMMENT_DEFAULT_URL, comment.getCommentId());
-
-        return ResponseEntity.created(location).build();
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(mapper.commentToCommentResponseDto(comment))
+                , HttpStatus.CREATED);
     }
 
     @PatchMapping("/{comment-id}")
     public ResponseEntity patchComment(@PathVariable("comment-id") @Positive long commentId,
-                                      @Valid @RequestBody CommentDto.Patch requestBody) {
+                                       @Valid @RequestBody CommentDto.Patch requestBody) {
         requestBody.setCommentId(commentId);
 
         Comment comment = commentService.updateComment(mapper.commentPatchDtoToComment(requestBody));
@@ -59,9 +63,9 @@ public class CommentController {
                 HttpStatus.OK);
     }
 
-    /*@GetMapping
+    @GetMapping
     public ResponseEntity getComments(@Positive @RequestParam int page,
-                                     @Positive @RequestParam int size) {
+                                      @Positive @RequestParam int size) {
         Page<Comment> pageComments = commentService.findComments(page - 1, size);
         List<Comment> comments = pageComments.getContent();
 
@@ -69,7 +73,7 @@ public class CommentController {
                 new MultiResponseDto<>(mapper.commentsToCommentResponseDtos(comments),
                         pageComments),
                 HttpStatus.OK);
-    }*/
+    }
 
     @DeleteMapping("/{comment-id}")
     public ResponseEntity deleteComment(@PathVariable("comment-id") long commentId) {
