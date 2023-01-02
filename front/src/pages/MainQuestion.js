@@ -6,15 +6,14 @@ import Sidebar from "../components/Sidebar";
 import MainAnswer from "./MainAnswer";
 import YourAnswer from "./YourAnswer";
 
-import { Avatar } from "@mui/material";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import HistoryIcon from "@mui/icons-material/History";
 
 const MainQuestion = () => {
+  const [questionData, setQuestionData] = useState(null);
 
-  const [questionData, setQuestionData] = useState(null)
-
-  const params = useParams();
+  const { id } = useParams();
 
   const [indexNum, setIndexNum] = useState(0);
 
@@ -24,37 +23,35 @@ const MainQuestion = () => {
 
   useEffect(() => {
     const getData = async () => {
-        const response = await axios.get("https://stackoverflow-6b095-default-rtdb.firebaseio.com/questions.json");
-        const refinedIndex = Object.keys(response.data);
-        const refinedAnswer = [];
-        setIndexNum(refinedIndex[params.id - 1]);
-        setData(response.data[refinedIndex[params.id - 1]]);
-        for (let i = 0; i < Object.keys(data.answers).length; i++) {
-          refinedAnswer.push(data.answers[Object.keys(data.answers)[i]])
-        }
-        setAnswer(refinedAnswer);
-        // console.log(response.data[Object.keys(response.data)[0]].title)
-    }
+      const response = await axios.get(
+        `http://ec2-43-201-34-210.ap-northeast-2.compute.amazonaws.com:8080/questions/${id}`
+      );
+      setData(response.data.data);
+      // console.log(response.data[Object.keys(response.data)[0]].title)
+    };
     getData();
-  })
+  });
 
   const handleAnswerSubmit = (body) => {
     const data = { answer: body };
-    axios(`https://stackoverflow-6b095-default-rtdb.firebaseio.com/questions/${indexNum}/answers.json`, {
-      method: 'post',
-      headers: {
-        // Authorization: user.token,
-      },
-      data,
-    })
-      // .then((res) => {
-      //   const newAnswer = { ...res.data, voteCount: 0 };
-      //   setQuestionData({
-      //     ...questionData,
-      //     answers: [...questionData.answers, newAnswer],
-      //   });
-      // })
-      // .catch((error) => console.error(error));
+    axios(
+      `http://ec2-43-201-34-210.ap-northeast-2.compute.amazonaws.com:8080/questions/${indexNum}/answers.json`,
+      {
+        method: "post",
+        headers: {
+          // Authorization: user.token,
+        },
+        data,
+      }
+    );
+    // .then((res) => {
+    //   const newAnswer = { ...res.data, voteCount: 0 };
+    //   setQuestionData({
+    //     ...questionData,
+    //     answers: [...questionData.answers, newAnswer],
+    //   });
+    // })
+    // .catch((error) => console.error(error));
   };
 
   // console.log(Object.values(data.answers))
@@ -115,7 +112,7 @@ const MainQuestion = () => {
 
               <div className={styles["post-mainqeustion"]}>
                 <div className={styles["post-mainqeustion-body"]}>
-                  {data.body}
+                  {data.content}
                 </div>
                 <span className={styles.tags}>react</span>
                 <span className={styles.tags}>css</span>
@@ -127,20 +124,18 @@ const MainQuestion = () => {
                     <span> Edit</span>
                     <span> Follow</span>
                   </div>
+
                   <div className={styles["author-middle"]}>
                     <div className={styles["author-edited"]}>
-                      edited 질문시간이 뜹니다!
-                      <div className={styles["author-info"]}>
-                        <Avatar />
-                        <div className={styles["author-name"]}>작성자</div>
-                      </div>
+                      edited 수정 시간
                     </div>
                   </div>
+
                   <div className={styles["author-right"]}>
                     <div className={styles["author-asked"]}>
-                      asked 질문시간이 뜹니다!
+                      asked 질문시간
                       <div className={styles["author-info"]}>
-                        <Avatar />
+                        <AccountBoxIcon />
                         <div className={styles["author-name"]}>작성자</div>
                       </div>
                     </div>
@@ -149,12 +144,10 @@ const MainQuestion = () => {
               </div>
             </div>
           </div>
-          <h2>{answer.length} ANSWERS</h2>
-          {answer.map(el => {
-            return (
-              <MainAnswer data={el.answer} />
-            )
-          })}
+          <h2>{answer.length} Answers</h2>
+          {/* {answer.map((el) => {
+            return <MainAnswer data={el.answer} />;
+          })} */}
           <YourAnswer handleAnswerSubmit={handleAnswerSubmit} />
         </div>
       </div>

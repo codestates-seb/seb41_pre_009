@@ -6,6 +6,7 @@
 .just-answer {
   display: flex;
   justify-items: center;
+  margin-bottom: 30px;
 }
 
 .all-answer-left {
@@ -52,16 +53,27 @@
   margin: 4px;
 }
 
+.author-middle {
+  border-radius: 3px;
+  color: hsl(210, 8%, 45%);
+  font-size: 12px;
+  padding: 5px;
+  display: flex;
+  width: 170px;
+  margin-right: 70px;
+  margin-left: 70px;
+}
+
 .author-right {
   border-radius: 3px;
-  background-color: rgb(217, 234, 247);
   color: hsl(210, 8%, 45%);
   font-size: 12px;
   padding: 5px;
   display: flex;
   align-items: center;
-  width: 200px;
-  margin: 4px;
+  width: 170px;
+  margin-right: 70px;
+  margin-left: 70px;
 }
 
 .author-asked {

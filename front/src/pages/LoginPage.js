@@ -5,182 +5,90 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./LoginPage.module.css";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import FacebookIcon from "@mui/icons-material/Facebook";
-import { loginAction } from "../redux/actions";
+import { loginActions } from "../redux/loginreducer";
 
 import axios from "axios";
-
-// const LoginPage = () => {
-//   const isAuth = useSelector((state) => state.auth.isAuthenticated);
-
-//   const dispatch = useDispatch();
-//   const navigate = useNavigate();
-
-//   // 로그인이 완료되면 메인으로 이동
-//   useEffect(() => {
-//     if (isAuth) {
-//       navigate("/");
-//     }
-//   }, [isAuth]);
-
-//   const [email, setEmail] = useState("");
-//   const [emailErrorMessage, setEmailErrorMessage] = useState("");
-//   const [password, setPassword] = useState("");
-//   const [passwordErrorMessage, setpasswordErrorMessage] = useState("");
-
-//   // 추가 이메일이 비어있을때
-//   // function isValidEmail(email) {
-//   //   if (email.length === 0) {
-//   //     return false;
-//   //   }
-//   //   return true;
-//   // }
-
-//   // 이메일 유효성 검사 - 이메일형식 들어가야지 통과되게끔
-//   const emailInputValueHandler = (e) => {
-//     const emailRegex =
-//       // /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-//       /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
-//     const currentEmail = e.target.value;
-//     setEmail(currentEmail);
-
-//     if (!emailRegex.test(currentEmail)) {
-//       setEmailErrorMessage("올바른 이메일 형식이 아닙니다.");
-//     } else {
-//       setEmailErrorMessage("");
-//     }
-//   };
-
-//   //패스워드 유효성 검사 -8글자 이상 + 영어 1글자 + 특수문자 1개 쳐야지 통과되게끔
-//   const passwordInputValueHandler = (e) => {
-//     const passwordRegex = /^(?=.*[a-zA-Z])((?=.*\d)(?=.*\W)).{8,16}$/;
-//     const currentPassword = e.target.value; // setPassword(e.target.value);;
-//     setPassword(currentPassword);
-
-//     if (!passwordRegex.test(currentPassword)) {
-//       setpasswordErrorMessage("비밀번호를 확인하세요.");
-//     } else {
-//       setpasswordErrorMessage("");
-//     }
-//   };
-
-//   // 로그인 폼이 제출되면 isAuth가 true로 전환
-//   const loginSubmitHandle = (event) => {
-//     event.preventDefault(); // 창이 새로고침되는 것을 막는다.
-
-//     //이메일칸 or 패스워드칸이  비어있으면 제출못하게 막는다.
-//     if (email.length === 0 || password.length === 0) {
-//       window.alert("이메일과 비밀번호를 입력해주세요.");
-//       return;
-//     }
-//     axios
-//       .post(
-//         // "https://b647-61-252-125-198.jp.ngrok.io/members/login",
-//         // "https://stackoverflowclone-7b282-default-rtdb.firebaseio.com/members/login.json",
-//         // "https://b647-61-252-125-198.jp.ngrok.io/auth/login ",
-//         // "https://2a4a-61-252-125-198.jp.ngrok.io/auth/login",
-//         "https://463b-61-252-125-198.jp.ngrok.io/auth/login",
-
-//         {
-//           email,
-//           password,
-//         }
-//       )
-//       .then((response) => {
-//         // localStorage.setItem("Token", response.headers.authorization);
-//         console.log(response);
-//         //토큰저장?
-//         // localStorage.setItem("isLogin", res.data.token);
-//         // localStorage.setItem("UserID", res.data.id);
-//         window.alert("로그인 성공");
-//         if ((response.status = 200)) {
-//           // return navigate("/loginpage");
-//           dispatch(authActions.login());
-//         }
-//       })
-//       .catch((err) => {
-//         // setMessage(err.response.data.message);
-//         console.log(err);
-//         alert("로그인 정보가 잘못되었습니다. 다시 시도해 주세요.");
-//       });
-//   };
-
-// 원본 코드
-// const LoginPage = () => {
-//   const isAuth = useSelector((state) => state.auth.isAuthenticated);
-
-//   const dispatch = useDispatch();
-//   const navigate = useNavigate();
-
-//   // 로그인이 완료되면 메인으로 이동
-//   useEffect(() => {
-//     if (isAuth) {
-//       navigate("/");
-//     }
-//   }, [isAuth]);
-
-//   // 로그인 폼이 제출되면 isAuth가 true로 전환
-//   const loginHandler = (event) => {
-//     event.preventDefault();
-
-//     dispatch(authActions.login());
-//   };
 
 const LoginPage = () => {
   //로그인 초기값 설정
   const initialInfo = { email: "", password: "" };
-  const [loginInfo, loginInfoSet] = useState(initialInfo);
+  const [loginInfo, setLoginInfo] = useState(initialInfo);
   // 비어있는 이메일
-  const [emptyEmail, emptyEmailSet] = useState(false);
+  const [emptyEmail, setEmptyEmail] = useState(false);
   // 비어있는 패스워드
-  const [emptyPassword, emptyPasswordSet] = useState(false);
+  const [emptyPassword, setEmptyPassword] = useState(false);
   //유효성검사 이메일
-  const [invalidEmail, invalidEmailSet] = useState(false);
+  const [invalidEmail, setInvalidEmail] = useState(false);
   //유효성검사 패스워드
-  const [invalidPassword, invalidPasswordSet] = useState(false);
+  const [invalidPassword, setInvalidPassword] = useState(false);
   //로그인 실패시 나타가게 하는 메세지
-  const [loginFailed, loginFailedSet] = useState(false);
+  const [loginFailed, setLoginFailed] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { user } = useSelector((state) => state.loginReducer);
+  const isLogin = useSelector((state) => state.isLogin);
 
   useEffect(() => {
-    if (user) {
+    if (isLogin) {
       navigate("/");
       //실패시 나타나는 메세지창
-      loginFailedSet(false);
+      setLoginFailed(false);
     }
-  }, [user]);
+  }, [isLogin]);
 
-  const handeLogin = (email, password) => {
+  const loginHandler = (email, password) => {
     // eslint-disable-next-line
     const emailRegex =
       /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
     const passwordRegex = /^[A-Za-z\d!@#$%^&*()_+~\-=]{8,40}$/;
 
     // 비어있으면 empty메세지 출력
-    if (email === "") emptyEmailSet(true);
+    if (email === "") setEmptyEmail(true);
     // 유효하지않으면(이메일 형식) invalid 메세지 출력
     else if (!emailRegex.test(email)) {
-      emptyEmailSet(false);
-      invalidEmailSet(true);
+      setEmptyEmail(false);
+      setInvalidEmail(true);
     }
 
     // 비어있으면 empty메세지 출력
-    if (password === "") emptyPasswordSet(true);
+    if (password === "") setEmptyPassword(true);
     // 유효하지않으면(8자 이상) invalid 메세지 출력
     else if (!passwordRegex.test(password)) {
-      emptyPasswordSet(false);
-      invalidPasswordSet(true);
+      setEmptyPassword(false);
+      setInvalidPassword(true);
     }
     // 유효한 이메일과 패스워드이면 로그인 요청
     if (emailRegex.test(email) && passwordRegex.test(password)) {
-      emptyEmailSet(false);
-      emptyPasswordSet(false);
-      invalidEmailSet(false);
+      setEmptyEmail(false);
+      setEmptyPassword(false);
+      setInvalidEmail(false);
 
-      dispatch(loginAction({ email, password }));
+      axios
+        .post(
+          "http://ec2-43-201-34-210.ap-northeast-2.compute.amazonaws.com:8080/auth/login",
+          {
+            email: email,
+            password: password,
+          }
+        )
+        .then((data) => {
+          dispatch(loginActions.login());
+          localStorage.clear();
+          localStorage.setItem("accessToken", data.headers.authorization);
+          localStorage.setItem("memberId", data.data.memberId);
+          navigate("/");
+          window.alert("success", "Login Complete !");
+        })
+        .then(() => {
+          console.log(localStorage.getItem("accessToken"));
+          console.log(localStorage.getItem("memberId"));
+        });
+      // 일치하는 유저가 존재 X
+      // } catch (error) {
+      //  alert("로그인 실패!");
+      //   throw new Error(error);
+      // }
     }
   };
 
@@ -231,7 +139,7 @@ const LoginPage = () => {
             type="email"
             value={loginInfo.email}
             onChange={(event) =>
-              loginInfoSet({ ...loginInfo, email: event.target.value })
+              setLoginInfo({ ...loginInfo, email: event.target.value })
             }
           ></input>
           {emptyEmail ? <p>Email cannot be empty.</p> : null}
@@ -245,7 +153,7 @@ const LoginPage = () => {
             type="password"
             value={loginInfo.password}
             onChange={(event) =>
-              loginInfoSet({ ...loginInfo, password: event.target.value })
+              setLoginInfo({ ...loginInfo, password: event.target.value })
             }
           ></input>
           {emptyPassword ? <p>Password cannot be empty.</p> : null}
@@ -255,7 +163,7 @@ const LoginPage = () => {
           {loginFailed ? <p>The email or password is incorrect.</p> : null}
           {/* {password.length > 0 && <div>{passwordErrorMessage}</div>} */}
           <button
-            onClick={() => handeLogin(loginInfo.email, loginInfo.password)}
+            onClick={() => loginHandler(loginInfo.email, loginInfo.password)}
           >
             Log in
           </button>

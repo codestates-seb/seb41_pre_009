@@ -3,9 +3,8 @@ import SignupSidebar from "./SignupSidebar";
 import styles from "./SignupPage.module.css";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import FacebookIcon from "@mui/icons-material/Facebook";
-
 import { useState } from "react";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -29,10 +28,7 @@ const SignupPage = () => {
   const signUpSubmit = () => {
     axios
       .post(
-        // "https://stackoverflowclone-7b282-default-rtdb.firebaseio.com/members",
-        // "https://b647-61-252-125-198.jp.ngrok.io/members",
-        // "https://2a4a-61-252-125-198.jp.ngrok.io/members",
-        "https://463b-61-252-125-198.jp.ngrok.io/members",
+        `http://ec2-43-201-34-210.ap-northeast-2.compute.amazonaws.com:8080/members`,
 
         //data담아주기
         {
@@ -255,6 +251,12 @@ const SignupPage = () => {
               policy and cookie policy
             </div>
           </form>
+
+          {/* 계정있으면 로그인페이지로 연결 */}
+          <div className={styles["signup-footer"]}>
+            Already have an account?
+            <Link to="/loginpage">Log in</Link>
+          </div>
         </div>
       </div>
     </div>

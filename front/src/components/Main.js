@@ -9,28 +9,35 @@ import { FilterList, PropaneSharp } from "@mui/icons-material";
 import styles from "./Main.module.css";
 
 const Main = () => {
-  // const isAuth = useSelector(state => state.auth.isAuthenticated);
-  const { user } = useSelector((state) => state.loginReducer);
+  const isLogin = useSelector((state) => state.isLogin);
 
   const [data, setData] = useState([]);
 
+  const token = localStorage.getItem("accessToken");
+
   useEffect(() => {
-    const getData = async () => {
-      try {
-        const response = await axios.get(
-          "https://stackoverflow-6b095-default-rtdb.firebaseio.com/questions.json"
-        );
-        const refinedData = [];
-        for (let i = 0; i < Object.keys(response.data).length; i++) {
-          refinedData.push(response.data[Object.keys(response.data)[i]]);
-        }
-        setData(refinedData);
-        // console.log(response.data[Object.keys(response.data)[0]].title)
-      } catch (error) {
-        window.alert("비상!");
+    fetch(
+      `http://ec2-43-201-34-210.ap-northeast-2.compute.amazonaws.com:8080/questions`,
+      {
+        headers: {
+          "Content-type": "application/json",
+          // Authorization: token,
+        },
       }
-    };
-    getData();
+    )
+      .then((res) => {
+        if (!res.ok) {
+          throw Error("could not fetch the data for that resource");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setData(data.data);
+        // setTotalQNum(data.pageInfo.totalElements);
+      })
+      .catch((error) => {
+        throw new Error(error);
+      });
   });
 
   return (
@@ -38,12 +45,12 @@ const Main = () => {
       <div className={styles["main-container"]}>
         <div className={styles["main-top"]}>
           <h2>All Questions</h2>
-          {!user && (
+          {!isLogin && (
             <Link to="/loginpage">
               <button>Ask Question</button>
             </Link>
           )}
-          {user && (
+          {isLogin && (
             <Link to="/askquestionpage">
               <button>Ask Question</button>
             </Link>
@@ -78,7 +85,14 @@ const Main = () => {
         <div className={styles.questions}>
           <div className={styles.question}>
             {data.map((el, index) => {
-              return <Question title={el.title} body={el.body} index={index} />;
+              return (
+                <Question
+                  key={index}
+                  title={el.title}
+                  body={el.content}
+                  index={index}
+                />
+              );
             })}
           </div>
         </div>

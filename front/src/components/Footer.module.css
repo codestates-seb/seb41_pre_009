@@ -29,12 +29,12 @@
   padding: 0px 12px 24px 0px;
   list-style: none;
 }
-.footer-main > h5 {
+.footer-main h5 {
   margin: 0 0 12px;
   color: rgb(186, 191, 196);
 }
 
-.footer-main > li {
+.footer-main li {
   line-height: 2;
   font-size: 13px;
 }
@@ -55,12 +55,12 @@
 
 .footer-social > ul {
   color: rgb(186, 191, 196);
-  margin: 0px 0px 12px 12px;
+  margin-top: -25px;
   padding: 1px;
   display: flex;
   list-style: none;
 }
-.footer-social > li {
+.footer-social li {
   list-style: none;
   margin-left: 12px;
   padding: 4px 1px;
