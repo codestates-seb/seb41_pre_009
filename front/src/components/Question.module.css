@@ -1,0 +1,111 @@
+.question {
+  display: flex;
+  width: 100%;
+  /* padding: 0px 20px; */
+  border-bottom: 1px solid rgb(227, 227, 227);
+}
+
+.question-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 16px;
+  width: calc(100% - 140px);
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.question-left {
+  display: flex;
+  margin: 10px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  flex-direction: column;
+  width: 140px;
+  padding: 2px 16px 4px 0;
+  text-align: left;
+  font-size: 13px;
+}
+
+.options {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-size: 13px;
+}
+
+.option {
+  display: inline-flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid transparent;
+}
+.option > span {
+  font-size: 12px;
+  color: rgb(143, 142, 142);
+  margin: 0px 16px 4px 0px;
+}
+
+.answer {
+  flex-grow: 1;
+  max-width: 100%;
+}
+.question-title {
+  margin: 2px 0px 5px;
+  padding: 0px 24px 0px 0px;
+  width: 100%;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  hyphens: auto;
+  overflow-wrap: break-word;
+}
+
+.answer-title {
+  margin: -2 0 -8px;
+  display: -webkit-box;
+  overflow: hidden;
+  word-break: break-word !important;
+  overflow-wrap: break-word !important;
+  hyphens: auto !important;
+  font-size: 13px;
+}
+
+.tags {
+  display: inline !important;
+  /* align-items: center;
+  flex-direction: row; */
+  background-color: rgb(225 236 244);
+  border-color: rgb(0 0 0 / 0%);
+  color: rgb(57 115 157);
+  padding: 3px 5px;
+  margin: 0px 5px 2px 0px;
+  font-size: 12px;
+  font-weight: 400;
+  border-radius: 3px;
+}
+
+.author {
+  /* padding: 5px; */
+  display: flex;
+  -webkit-box-pack: end;
+  justify-content: flex-end;
+  -webkit-box-align: center;
+  align-items: center;
+  width: auto;
+  font-size: 13px;
+  margin-top: -30px;
+}
+
+.author > p {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  color: rgb(143, 142, 142);
+}
