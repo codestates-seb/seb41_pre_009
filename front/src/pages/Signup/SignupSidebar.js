@@ -43,6 +43,15 @@ const SignupSidbar = () => {
           </svg>
           <div class={styles["signup-item"]}>Get unstuck — ask a question</div>
         </div>
+
+        <div className={styles["signup-word"]}>
+          <div>
+            Collaborate and share knowledge with a private group for FREE.
+          </div>
+          <a href="https://stackoverflow.co/teams/?utm_source=so-owned&utm_medium=product&utm_campaign=free-50&utm_content=public-sign-up">
+            Get Stack Overflow for Teams free for up to 50 users.
+          </a>
+        </div>
       </div>
     </div>
   );

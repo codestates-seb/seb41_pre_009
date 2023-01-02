@@ -8,16 +8,16 @@ import Footer from "../components/Footer";
 import styles from "./QuestionsPage.module.css";
 
 const QuestionsPage = () => {
-    return (
-        <React.Fragment>
-            <div className={styles.container}>
-                <Sidebar />
-                <Main />
-                <RightSidebar />
-            </div>
-            <Footer/>
-        </React.Fragment>
-    )
-}
+  return (
+    <React.Fragment>
+      <div className={styles.container}>
+        <Sidebar />
+        <Main />
+        <RightSidebar />
+      </div>
+      <Footer />
+    </React.Fragment>
+  );
+};
 
 export default QuestionsPage;

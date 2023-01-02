@@ -3,7 +3,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 800px;
+  height: 94.5vh;
+  background-color: hsl(210, 8%, 95%);
 }
 
 .container > button {
@@ -12,32 +13,43 @@
 }
 
 form {
-  width: 400px;
+  width: 290px;
+  background-color: #ffff;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 5px;
-  padding-top: 10px;
+  padding-top: 14px;
   padding-bottom: 10px;
-  box-shadow: 1px 1px rgb(201, 201, 201);
+  box-shadow: 0 10px 24px hsl(0deg 0% 0% / 5%), 0 20px 48px hsl(0deg 0% 0% / 5%),
+    0 1px 4px hsl(0deg 0% 0% / 10%);
 }
 
 form > input {
-  width: 90%;
-  margin-left: 15px;
+  width: 84%;
+  margin-left: 20px;
   margin-bottom: 10px;
+  height: 28px;
+  border: 1px solid hsl(210, 8%, 75%);
+  border-radius: 3px;
 }
 
 form > div {
-  margin-left: 15px;
-  margin-bottom: 10px;
+  margin: 10px 0px 8px 20px;
   font-weight: 600;
+  font-size: 15px;
 }
 
 form > button {
-  width: 92.2%;
-  margin-left: 15px;
+  width: 86.2%;
+  margin: 5px 0px 10px 20px;
+}
+
+/* 유효성검사-메세지오류  */
+form > p {
+  margin: 0px 0px 10px 20px;
+  font-size: 12px;
+  color: hsl(358, 62%, 52%);
 }
 
 .socialbox {
@@ -110,6 +122,18 @@ form > button {
 .withFaceBook > svg {
   width: 22px;
   margin-right: 3px;
+}
+
+.signup-link {
+  width: 100%;
+  max-width: 288px;
+  font-size: 13px;
+  text-align: center;
+  padding: 24px 0;
+}
+.signup-link > a {
+  color: hsl(206, 100%, 40%);
+  margin-left: 6px;
 }
 
 /* .withGoogle {

@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./MainAnswer.module.css";
 
-import { Avatar } from "@mui/material";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import HistoryIcon from "@mui/icons-material/History";
 
@@ -43,9 +43,7 @@ const MainAnswer = (props) => {
             </div>
           </div>
           <div className={styles["post-mainanswer"]}>
-            <div className={styles["post-mainanswer-body"]}>
-              {props.data}
-            </div>
+            <div className={styles["post-mainanswer-body"]}>{props.data}</div>
             <div className={styles["post-mainanswer-author"]}>
               <div className={styles["author-left"]}>
                 <span> Share</span>
@@ -53,11 +51,15 @@ const MainAnswer = (props) => {
                 <span> Follow</span>
               </div>
 
+              <div className={styles["author-middle"]}>
+                <div className={styles["author-edited"]}>edited 수정 시간</div>
+              </div>
+
               <div className={styles["author-right"]}>
                 <div className={styles["author-asked"]}>
-                  asked 질문시간이 뜹니다!
+                  asked 질문시간
                   <div className={styles["author-info"]}>
-                    <Avatar />
+                    <AccountBoxIcon />
                     <div className={styles["author-name"]}>작성자</div>
                   </div>
                 </div>

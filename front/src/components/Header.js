@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-
-import { loginAction } from "../redux/actions";
+import { loginActions } from "../redux/loginreducer";
+// import { loginAction } from "../redux/actions";
 // import { searchActions } from "../redux/searchSlice";
 
 import styles from "./Header.module.css";
@@ -19,10 +19,10 @@ import TableRowsIcon from "@mui/icons-material/TableRows";
 function Header() {
   const dispatch = useDispatch();
 
-  const { user } = useSelector((state) => state.loginReducer);
+  const isLogin = useSelector((state) => state.isLogin);
 
   const logoutHandler = () => {
-    dispatch(loginAction.logout());
+    dispatch(loginActions.logout());
   };
 
   const [searchVal, setSearchVal] = useState("");
@@ -38,7 +38,7 @@ function Header() {
   };
 
   return (
-    <div className={styles.header}>
+    <div className={styles["header-main"]}>
       <div className={styles["header-left"]}>
         <div className={styles["header-left-container"]}>
           <Link to="/">
@@ -48,7 +48,9 @@ function Header() {
               className={styles.HomeLogo}
             />
           </Link>
+          <h3>About</h3>
           <h3>Products</h3>
+          <h3>For Teams</h3>
         </div>
         <div className={styles["header-middle"]}>
           <form
@@ -66,7 +68,7 @@ function Header() {
         </div>
         <div className={styles["header-right"]}>
           <div className={styles["header-right-container"]}>
-            {user && (
+            {isLogin && (
               <div>
                 <Avatar />
                 <InboxIcon />
@@ -77,10 +79,12 @@ function Header() {
                 <button onClick={logoutHandler}>로그아웃</button>
               </div>
             )}
-            {!user && (
-              <div>
-                <Link to="/loginpage">로그인</Link>
-                <Link to="/signuppage">회원가입</Link>
+            {!isLogin && (
+              <div className={styles["header-right-container-button"]}>
+                <Link to="/loginpage">Log in</Link>
+                <div className={styles["header-right-container-buttons"]}>
+                  <Link to="/signuppage">Sign up</Link>
+                </div>
               </div>
             )}
           </div>

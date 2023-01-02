@@ -13,20 +13,19 @@ import MainQuestion from "./pages/MainQuestion";
 import "./App.css";
 
 const App = () => {
-
   return (
     <BrowserRouter>
       <Header />
       <Routes>
         <Route path="/" element={<QuestionsPage />} />
         <Route path="/askquestionpage" element={<AskQuestionPage />} />
-        <Route path="/mainquestion/:id" element={<MainQuestion />} />
+        <Route path="/question/:id" element={<MainQuestion />} />
         <Route path="/loginpage" element={<LoginPage />} />
         <Route path="/signuppage" element={<SignupPage />} />
-        <Route path="/loadingpage" element={<LoadingPage/>} />
+        <Route path="/loadingpage" element={<LoadingPage />} />
       </Routes>
     </BrowserRouter>
   );
-}
+};
 
 export default App;
